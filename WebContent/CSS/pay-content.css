@@ -1,0 +1,41 @@
+body{
+	background-color:#E6E6FA;
+}
+form{
+	margin-left:30%;
+	margin-right:30%;
+	margin-bottom:10%;
+	min-width:500px;
+	min-height:300px;
+	background-color:#F5F5DC;
+	border-radius:20px;
+	border:5px solid;
+	border-color:yellow;
+}
+h1{
+	text-align:center;
+}
+input::-webkit-input-placeholder { color: red; }
+form input:not(.button){
+	border-radius:5px;
+	outline:none;
+}
+.short{
+	width:55px;
+}
+.input-content{
+	margin:20px;
+}
+.input-content span{
+	margin:10px;
+}
+.input-content input{
+	margin:10px;
+}
+.name{
+	margin-right:60px;
+}
+.button-content{
+	margin:30px;
+	text-align:center;
+}
