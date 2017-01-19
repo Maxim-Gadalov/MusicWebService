@@ -12,7 +12,7 @@
 <body>
 <h1>Please enter your credit card details to carry out transaction</h1>
 <h2>You want to buy :</h2>
-<h3>Track name for cost</h3>
+<h3>${singer} - ${trackName} for ${cost}$</h3>
 <form action="" method="POST">
 <div class="input-content">
 <span>Credit card number :</span>
@@ -27,6 +27,9 @@
 <input class="short" type="text" name="cvc" maxlength="3" required placeholder="CVC"><br>
 </div>
 <div class="button-content">
+<div style="color:red;text-align:center;">
+  ${errorMessage}
+</div>
 <input class="button" type="submit" value="Submit">
 <input class="button" type="reset" value="Reset">
 </div>

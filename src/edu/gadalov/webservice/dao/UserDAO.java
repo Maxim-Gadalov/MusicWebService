@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.gadalov.webservice.connection.ConnectionPool;
+import edu.gadalov.webservice.entity.Discount;
 import edu.gadalov.webservice.entity.User;
 
 public class UserDAO extends AbstractDAO<Integer,User>{
@@ -24,6 +25,7 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 	private final static String SELECT_USER_BY_NICKNAME = "SELECT * FROM `mydb`.`users` WHERE `nickname` = ?";
 	private final static String UPDATE_USER = "UPDATE `mydb`.`users` SET `nickname` = ? , `email` = ? , `skype` = ? , `phone_number` = ? WHERE `id_users` = ?";
 	private final static String UPDATE_PASSWORD = "UPDATE `mydb`.`users` SET `password` = ? WHERE `id_users` = ?";
+	private final static String UPDATE_DISCOUNT = "UPDATE `mydb`.`users` SET `id_bonus` = ? WHERE `id_users` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
 	public Connection getConnection(){
 		return cn;
@@ -215,6 +217,23 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 		try{
 			st = cn.prepareStatement(UPDATE_PASSWORD);
 			st.setString(1,entity.getPassword());
+			st.setInt(2, entity.getId());
+			st.executeUpdate();
+			result = true;
+		}catch(SQLException e){
+			LOG.error(e);
+		}
+		finally{
+			statementClose(st);
+		}
+		return result;
+	}
+	public boolean updateUserDiscount(Discount discount, User entity){
+		boolean result = false;
+		PreparedStatement st = null;
+		try{
+			st = cn.prepareStatement(UPDATE_DISCOUNT);
+			st.setInt(1,discount.getId());
 			st.setInt(2, entity.getId());
 			st.executeUpdate();
 			result = true;

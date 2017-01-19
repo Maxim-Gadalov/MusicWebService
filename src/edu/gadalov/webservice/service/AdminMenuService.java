@@ -59,8 +59,7 @@ public class AdminMenuService {
 		AudioTrackDAO trackDAO = new AudioTrackDAO();
 		boolean result = false;
 		try{
-		trackDAO.create(track);
-		result = true;
+			result = trackDAO.create(track);
 		} finally{
 			trackDAO.close(trackDAO.getConnection());
 		}

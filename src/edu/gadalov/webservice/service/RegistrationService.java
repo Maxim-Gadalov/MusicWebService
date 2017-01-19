@@ -27,20 +27,16 @@ public class RegistrationService {
 	}
 	public boolean addUser(User user){
 		boolean result = false;
-		UserDAO userDAO = null;
+		UserDAO userDAO = new UserDAO();
 		UserValidation validation = new UserValidation();
 		try{
-		if(validation.registrationFormValidity(user)){
-				userDAO = new UserDAO();
+			if(validation.registrationFormValidity(user)){
 				result = userDAO.create(user);
-		}
-		}
-		finally{
-			if(userDAO != null){
-				userDAO.close(userDAO.getConnection());
+				}
 			}
-		}
+		finally{
+			userDAO.close(userDAO.getConnection());
+			}
 		return result;
 	}
-
 }

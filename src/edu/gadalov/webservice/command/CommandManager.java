@@ -28,6 +28,10 @@ public class CommandManager {
 			return new TracksPageCommand();
 		case "pagination":
 			return new PaginationCommand();
+		case "buy-track":
+			return new BuyTrackPageCommand();
+		case "transaction":
+			return new BuyTrackCommand();
 		default:
 				return new DefaultCommand();
 		}	

@@ -30,9 +30,7 @@ public class UserValidation {
 			temp = userDAO.findByEmail(user.getEmail());
 		}
 		finally{
-			if(userDAO != null){
-				userDAO.close(userDAO.getConnection());
-			}
+			userDAO.close(userDAO.getConnection());
 		}
 		return (temp == null);
 			
@@ -44,9 +42,7 @@ public class UserValidation {
 			temp = userDAO.findByNickname(user.getNickname());
 		}
 		finally{
-			if(userDAO != null){
-				userDAO.close(userDAO.getConnection());
-			}
+			userDAO.close(userDAO.getConnection());	
 		}
 		return (temp == null);
 	}
@@ -57,9 +53,7 @@ public class UserValidation {
 			temp = userDAO.findByNickname(nickname);
 		}
 		finally{
-			if(userDAO != null){  // ???
-				userDAO.close(userDAO.getConnection());
-			}
+			userDAO.close(userDAO.getConnection());
 		}
 		return (temp == null);
 	}
@@ -70,9 +64,7 @@ public class UserValidation {
 			temp = userDAO.findByEmail(email);
 		}
 		finally{
-			if(userDAO != null){ // ?? что за херня?
-				userDAO.close(userDAO.getConnection());
-			}
+			userDAO.close(userDAO.getConnection());
 		}
 		return (temp == null);		
 	}
@@ -87,7 +79,6 @@ public class UserValidation {
 				password.matches(LOWERCASE_LETTER_REGEXP) && password.matches(UPPERCASE_LETTER_REGEXP));
 	}
 	public boolean isEmail(String login){
-		return(login.matches(EMAIL_CHECK_REGEXP));
+		return (login.matches(EMAIL_CHECK_REGEXP));
 	}
-	
 }

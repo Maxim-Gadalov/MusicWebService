@@ -1,6 +1,7 @@
 package edu.gadalov.webservice.service;
 
 import edu.gadalov.webservice.dao.UserDAO;
+import edu.gadalov.webservice.entity.Discount;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.validation.UserValidation;
 
@@ -20,5 +21,14 @@ public class UserService {
 		}
 		return user;
 	}
-
+	public boolean setDiscount(Discount discount, User user){
+		boolean result = false;
+		UserDAO userDAO = new UserDAO();
+		try{
+			result = userDAO.updateUserDiscount(discount, user);
+		} finally{
+			userDAO.close(userDAO.getConnection());
+		}
+		return result;
+	}
 }

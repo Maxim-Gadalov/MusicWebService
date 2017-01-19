@@ -37,12 +37,6 @@ public class AddTrackCommand extends AbstractCommand{
 		String genre = request.getParameter("genre");
 		UserService userService = new UserService();
 		User admin = userService.getUser(adminLogin);
-		System.out.println(singer);
-		System.out.println(trackName);
-		System.out.println(cost);
-		System.out.println(album);
-		System.out.println(filePath);
-		System.out.println(genre);
 		errorMessage = validation.checkCostValidation(cost);
 		if(errorMessage.isEmpty()){
 		AudioTrack track = new AudioTrack(1,admin,singer,trackName,album,filePath,Float.valueOf(cost),genre);

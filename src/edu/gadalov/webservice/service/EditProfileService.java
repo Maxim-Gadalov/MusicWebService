@@ -28,9 +28,7 @@ public class EditProfileService {
 		UserDAO userDAO = new UserDAO();
 		boolean result = false;
 		try{
-		if(userDAO.updateUser(user)){
-			result = true;
-		} 
+			result = userDAO.updateUser(user);
 		}finally{
 			userDAO.close(userDAO.getConnection());
 		}

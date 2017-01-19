@@ -31,6 +31,9 @@
     <ctg:header-custom nickname="${nickname}" role="${role}"/> 
   </header>
   <section id="trackPlayer">
+  <div style="color:red;text-align:center;">
+  ${errorMessage}
+  </div>
   <c:forEach  var="elem" items="${trackList}" varStatus="status">
   <form action="<c:url value="/MusicServiceServlet" context="/MusicWebService"/>" method="POST">
   <div class="track">

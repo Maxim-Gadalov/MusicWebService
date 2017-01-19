@@ -16,7 +16,7 @@ public class AdminPageCommand extends AbstractCommand{
 	public String execute(HttpServletRequest request) {
 		AdminMenuService adminMenu = new AdminMenuService();
 		List<User> userList = adminMenu.getAllUsers();
-		List<AudioTrack> trackList = adminMenu.getAllTracks();
+		List<AudioTrack> trackList = adminMenu.getAllTracks(); // tracks
 		if(!userList.isEmpty()){
 			request.setAttribute("list_users", userList);
 		}

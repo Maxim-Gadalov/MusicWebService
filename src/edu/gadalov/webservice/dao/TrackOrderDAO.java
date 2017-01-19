@@ -18,12 +18,15 @@ import edu.gadalov.webservice.entity.User;
 
 public class TrackOrderDAO extends AbstractDAO<Integer, TrackOrder>{
 	private static final Logger LOG = LogManager.getLogger(TrackOrderDAO.class);
-	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
 	private static final String SELECT_ALL_ORDERS = "SELECT * FROM `mydb`.`track_order`";
 	private static final String ADD_ORDER = "INSERT INTO `mydb`.`track_order`(`id_user`,`id_audio_track`) VALUES (?,?)";
 	private static final String SELECT_ORDERS_BY_USER = "SELECT * FROM `mydb`.`track_order` WHERE `id_user` = ";
 	private static final String SELECT_ORDERS_BY_TRACK = "SELECT * FROM `mydb`.`track_order` WHERE `id_audio_track` = ";
-
+	private static final String SELECT_ORDER = "SELECT * FROM `mydb`.`track_order` WHERE `id_user` = ? AND `id_audio_track` = ?";
+	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
+	public Connection getConnection(){
+		return this.cn;
+	}
 	@Override
 	public List<TrackOrder> findAll() {
 		List<TrackOrder> orders = new ArrayList<>();
@@ -136,5 +139,24 @@ public class TrackOrderDAO extends AbstractDAO<Integer, TrackOrder>{
 				statementClose(st);
 			}
 			return orders;	
+	}
+	public boolean findByTrackOrder(TrackOrder order){
+		boolean result = false;
+		PreparedStatement st = null;
+		try{
+			st = cn.prepareStatement(SELECT_ORDER);
+			st.setInt(1, order.getUser().getId());
+			st.setInt(2, order.getTrack().getId());
+			ResultSet rs = st.executeQuery();
+			while(rs.next()){
+				result = true; 
+			 }
+		 } catch(SQLException e){
+			 LOG.error(e);
+		 }
+		 finally{
+			 statementClose(st);
+		 }
+		return result;
 	}
 }

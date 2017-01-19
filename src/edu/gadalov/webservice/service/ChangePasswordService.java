@@ -25,9 +25,7 @@ public class ChangePasswordService {
 		boolean result = false;
 		user.setPassword(EncryptionPassword.encrypt(password));
 		try{
-		if(userDAO.updateUserPassword(user)){
-			result = true;
-		}
+			result = userDAO.updateUserPassword(user);
 		} finally{
 			userDAO.close(userDAO.getConnection());
 		}

@@ -4,12 +4,12 @@ public class CreditCardValidation {
 	private static final String CARD_NUMBER_REGEXP = "[0-9]+";
 	private static final String CARD_NAME_REGEXP = "[A-z]+";
 	private static final String CARD_EXPIRY_DATE_REGEXP = "[0-9]{2}[/][0-9]{2}";
-	private static final String ERROR_MESSAGE_CARD_NUMBER_LENGTH = "Card number must contain 16 digits";
-	private static final String ERROR_MESSAGE_CARD_NUMBER_CONTENT = "Card number must contain only digits";
-	private static final String ERROR_MESSAGE_CARD_NAME_CONTENT = "Card name must contain only letters";
-	private static final String ERROR_MESSAGE_EXPIRY_DATE_CONTENT = "Expiry date must be like '12/17'";
-	private static final String ERROR_MESSAGE_CARD_CODE_LENGTH = "Card code must contain 3 digits";
-	private static final String ERROR_MESSAGE_CARD_CODE_CONTENT = "Card code must contain only digits";
+	private static final String ERROR_MESSAGE_CARD_NUMBER_LENGTH = "Card number must contain 16 digits; ";
+	private static final String ERROR_MESSAGE_CARD_NUMBER_CONTENT = "Card number must contain only digits; ";
+	private static final String ERROR_MESSAGE_CARD_NAME_CONTENT = "Card name must contain only letters; ";
+	private static final String ERROR_MESSAGE_EXPIRY_DATE_CONTENT = "Expiry date must be like '12/17'; ";
+	private static final String ERROR_MESSAGE_CARD_CODE_LENGTH = "Card code must contain 3 digits; ";
+	private static final String ERROR_MESSAGE_CARD_CODE_CONTENT = "Card code must contain only digits; ";
 	public String checkCardNumber(String cardNumber){
 		String errorMessage = new String();
 		if(cardNumber.length() != 16){
@@ -44,6 +44,15 @@ public class CreditCardValidation {
 		}
 		return errorMessage;
 		
+	}
+	public String creditCardValidation(String cardNumber,String cvc,String expiryDate, String firstName,String lastName){
+		String errorMessage = new String();
+		errorMessage += checkCardCode(cvc);
+		errorMessage += checkCardExpiryDate(expiryDate);
+		errorMessage += checkCardName(firstName);
+		errorMessage += checkCardName(lastName);
+		errorMessage += checkCardNumber(cardNumber);
+		return errorMessage;
 	}
 
 }
