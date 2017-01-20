@@ -9,25 +9,25 @@ import edu.gadalov.webservice.entity.TrackOrder;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.BuyTrackService;
 import edu.gadalov.webservice.service.TrackService;
-import edu.gadalov.webservice.service.UserService;
 
 public class BuyTrackPageCommand extends AbstractCommand{
 	private static final String BUY_TRACK_PAGE = "jsp/pay.jsp";
 	private static final String TRACKS_PAGE = "jsp/tracks.jsp";
+	private static final int MAX_TRACKS_ON_PAGE = 10;
+	private static final String LOGIN_PAGE = "jsp/login.jsp";
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		String nickname = request.getSession().getAttribute("nickname").toString();
-	
+		if(request.getSession().getAttribute("user") == null){
+			return LOGIN_PAGE;
+		}
+		User user = (User)request.getSession().getAttribute("user");
 		String idTrack = request.getParameter("idTrack");
 		TrackService service = new TrackService();
-		UserService userService = new UserService();
 		BuyTrackService buyService = new BuyTrackService();
 		String errorMessage = new String();
 		String page = new String();
 		AudioTrack track = service.getTrackById(Integer.valueOf(idTrack));
-		request.getSession().setAttribute("track", track);
-		User user = userService.getUser(nickname);
 		TrackOrder order = new TrackOrder(user,track);
 		float trackCost = buyService.getDiscountCost(user, track);
 		errorMessage = service.checkTrackOrder(order);
@@ -41,8 +41,8 @@ public class BuyTrackPageCommand extends AbstractCommand{
 			request.setAttribute("errorMessage", errorMessage);
 			List<AudioTrack> list = service.getAllTracks();
 			if(!list.isEmpty()){
-				if(list.size() > 10){
-					request.setAttribute("trackList", list.subList(0, 10));
+				if(list.size() > MAX_TRACKS_ON_PAGE){
+					request.setAttribute("trackList", list.subList(0, MAX_TRACKS_ON_PAGE));
 				} else{
 					request.setAttribute("trackList", list);
 				}
@@ -52,5 +52,4 @@ public class BuyTrackPageCommand extends AbstractCommand{
 		}
 		return page;
 	}
-
 }

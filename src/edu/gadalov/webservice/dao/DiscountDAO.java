@@ -24,6 +24,9 @@ public class DiscountDAO extends AbstractDAO<Integer, Discount>{
 	public DiscountDAO(Connection cn){
 		this.cn = cn;
 	}
+	public Connection getConnection(){
+		return cn;
+	}
 	@Override
 	public List<Discount> findAll() {
 		List<Discount> discounts = new ArrayList<>();

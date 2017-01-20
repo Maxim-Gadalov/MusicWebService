@@ -18,7 +18,7 @@
 </head>
 <body>
 <header>
-    <ctg:header-custom nickname="${nickname}" role="${role}"/> 
+  <ctg:header-custom user="${user}"/> 
   </header>
   <section>
   <form class="registration-form" id="registration" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">

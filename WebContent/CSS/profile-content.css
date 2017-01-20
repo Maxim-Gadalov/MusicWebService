@@ -9,7 +9,8 @@
 	width:50%;
 	float:right;
 	padding-top:150px;
-	min-width:400px;
+	min-width:500px;
+	overflow:auto;
 }
 .change-password{
 	background-color:green;
@@ -48,4 +49,17 @@
 .edit-profile:hover{
 	border:3px solid;
 	border-color:yellow;
-}	
+}
+audio {
+	 min-width:400px;
+	 /* can not play audio file 
+	 position:relative;
+	 z-index:-1;
+	 */
+}
+.track{
+	padding:15px;
+}
+span{
+	margin-bottom:20px;
+}

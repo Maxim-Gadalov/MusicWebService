@@ -6,6 +6,7 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.validation.UserValidation;
 
 public class UserService {
+	private static final String ADMIN_ROLE_NAME = "admin";
 	public User getUser(String login){
 		User user = null;
 		UserValidation validation = new UserValidation();
@@ -30,5 +31,8 @@ public class UserService {
 			userDAO.close(userDAO.getConnection());
 		}
 		return result;
+	}
+	public boolean isAdmin(User user){
+		return ADMIN_ROLE_NAME.equals(user.getRole().getRoleName());
 	}
 }

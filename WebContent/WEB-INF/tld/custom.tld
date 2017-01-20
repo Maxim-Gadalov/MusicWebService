@@ -11,12 +11,7 @@
        <tag-class>edu.gadalov.webservice.customtag.CustomHeaderTag</tag-class>
        <body-content>empty</body-content>
        <attribute>
-          <name>nickname</name>
-          <required>true</required>
-          <rtexprvalue>true</rtexprvalue>
-       </attribute>
-       <attribute>
-          <name>role</name>
+          <name>user</name>
           <required>true</required>
           <rtexprvalue>true</rtexprvalue>
        </attribute>

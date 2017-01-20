@@ -18,7 +18,7 @@
 </head>
 <body>
 <header>
-    <ctg:header-custom nickname="${nickname}" role="${role}"/> 
+    <ctg:header-custom user="${user}"/> 
   </header>
   <h1>Welcome to the EDM web service</h1>
  <section class="content"> 

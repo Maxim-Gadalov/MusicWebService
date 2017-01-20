@@ -7,6 +7,7 @@ import edu.gadalov.webservice.dao.AudioTrackDAO;
 import edu.gadalov.webservice.dao.TrackOrderDAO;
 import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.entity.TrackOrder;
+import edu.gadalov.webservice.entity.User;
 
 public class TrackService {
 	private static final String ERROR_MESSAGE_ORDER_TRACK = "You have already bought this track";
@@ -48,6 +49,32 @@ public class TrackService {
 			orderDAO.close(orderDAO.getConnection());
 		}
 		return result;
+	}
+	public List<AudioTrack> getUserTracks(User user){
+		List<AudioTrack> list = new ArrayList<>();
+		List<TrackOrder> temp = new ArrayList<>();
+		TrackOrderDAO orderDAO = new TrackOrderDAO();
+		try{
+			temp = orderDAO.findByUser(user);
+			if(!temp.isEmpty()){
+			for(int i = 0;i < temp.size();i++){
+				list.add(temp.get(i).getTrack());
+			}
+			}
+		} finally{
+			orderDAO.close(orderDAO.getConnection());
+		}
+		return list;
+	}
+	public List<AudioTrack> getVisibleTracks(){
+		List<AudioTrack> list = new ArrayList<>();
+		AudioTrackDAO trackDAO = new AudioTrackDAO();
+		try{
+			list = trackDAO.findVisibleTracks();
+		} finally{
+			trackDAO.close(trackDAO.getConnection());
+		}
+		return list;
 	}
 
 }

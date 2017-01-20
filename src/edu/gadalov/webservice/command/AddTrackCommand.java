@@ -11,15 +11,18 @@ import org.apache.logging.log4j.Logger;
 import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.AdminMenuService;
-import edu.gadalov.webservice.service.UserService;
 import edu.gadalov.webservice.validation.TrackValidation;
 
-public class AddTrackCommand extends AbstractCommand{
+public class AddTrackCommand extends AdminPageCommand{
 	private static final Logger LOG = LogManager.getLogger(AddTrackCommand.class);
 	private static final String ADMIN_PAGE = "jsp/admin-menu.jsp";
-
+	private static final String MAIN_PAGE = "main.jsp";
+	
 	@Override
 	public String execute(HttpServletRequest request) {
+		if(request.getSession().getAttribute("user") == null){
+			return MAIN_PAGE;
+		}
 		AdminMenuService adminMenu = new AdminMenuService();
 		TrackValidation validation = new TrackValidation();
 		String errorMessage = new String();
@@ -27,7 +30,6 @@ public class AddTrackCommand extends AbstractCommand{
 		String trackName = request.getParameter("track-name");
 		String cost = request.getParameter("cost");
 		String album = request.getParameter("album");
-		String adminLogin = request.getSession().getAttribute("nickname").toString();
 		String filePath = null;
 		try {
 			filePath = adminMenu.uploadTrack(request);
@@ -35,16 +37,16 @@ public class AddTrackCommand extends AbstractCommand{
 			LOG.error("Some problems with uploading file "+e);
 		}
 		String genre = request.getParameter("genre");
-		UserService userService = new UserService();
-		User admin = userService.getUser(adminLogin);
 		errorMessage = validation.checkCostValidation(cost);
+		User admin = (User) request.getSession().getAttribute("user");
+		// add tracks and users monitor 
 		if(errorMessage.isEmpty()){
-		AudioTrack track = new AudioTrack(1,admin,singer,trackName,album,filePath,Float.valueOf(cost),genre);
+		AudioTrack track = new AudioTrack(1,admin,singer,trackName,album,filePath,Float.valueOf(cost),genre,true);
 		adminMenu.createTrack(track);
 		} else {
 			request.setAttribute("addTrackError", errorMessage);
 		}
+		super.execute(request);
 		return ADMIN_PAGE;
 	}
-
 }

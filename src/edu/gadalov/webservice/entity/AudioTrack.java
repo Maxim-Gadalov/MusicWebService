@@ -9,8 +9,9 @@ public class AudioTrack {
 	private String filePath;
 	private float cost;
 	private String genre;
+	private boolean visibility;
 	public AudioTrack(int id, User user, String singer, String trackName, String album, String filePath,
-			float cost, String genre) {
+			float cost, String genre, boolean visibility) {
 		this.id = id;
 		this.user = user;
 		this.singer = singer;
@@ -19,6 +20,7 @@ public class AudioTrack {
 		this.filePath = filePath;
 		this.cost = cost;
 		this.genre = genre;
+		this.visibility = visibility;
 	}
 	public int getId() {
 		return id;
@@ -67,6 +69,12 @@ public class AudioTrack {
 	}
 	public String getGenre(){
 		return genre;
+	}
+	public void setVisibility(boolean visibility){
+		this.visibility = visibility;
+	}
+	public boolean getVisibility(){
+		return visibility;
 	}
 
 }

@@ -4,10 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.LoginService;
+import edu.gadalov.webservice.service.UserService;
 
 public class LoginCommand extends AbstractCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String LOGIN_PAGE = "jsp/login.jsp";
+	private static final String DATABASE_ERROR = "Database connection interrupted";
 
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -16,15 +18,19 @@ public class LoginCommand extends AbstractCommand{
 		String login = request.getParameter("nick-or-mail");
 		String password = request.getParameter("password");
 		LoginService loginService = new LoginService();
+		UserService userService = new UserService();
 	    errorMessage = loginService.loginCheck(login, password);
-		request.setAttribute("errorMessage", errorMessage);
 		if(errorMessage.isEmpty()){
 			page = MAIN_PAGE;
-			User user = loginService.getLoginUser(login);
-			request.getSession().setAttribute("nickname", user.getNickname());
-			request.getSession().setAttribute("role", user.getRole().getRoleName());
+			User user = userService.getUser(login);
+			if(user != null){
+				request.getSession().setAttribute("user", user);	
+			} else{
+				request.setAttribute("errorMessage", DATABASE_ERROR);
+			}
+		} else{
+			request.setAttribute("errorMessage", errorMessage);
 		}
 		return page;
 	}
-
 }

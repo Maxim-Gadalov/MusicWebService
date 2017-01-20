@@ -7,6 +7,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import edu.gadalov.webservice.entity.User;
+
 public class CustomHeaderTag extends TagSupport{
 	private static final Logger LOG = LogManager.getLogger(CustomHeaderTag.class);
 	private static final long serialVersionUID = 2984735954509651502L;
@@ -17,19 +19,16 @@ public class CustomHeaderTag extends TagSupport{
 	private static final String LOGIN_PAGE_PATH = "/MusicWebService/jsp/login.jsp";
 	private static final String SIGN_UP_PAGE_PATH = "/MusicWebService/jsp/registration.jsp";
 	private static final String HOME_PAGE_PATH = "/MusicWebService/main.jsp";
-	private String nickname;
-	private String role;
-	public void setNickname(String nickname){
-		this.nickname = nickname;
-	}
-	public void setRole(String role){
-		this.role = role;
+	private User user;
+	
+	public void setUser(User user){
+		this.user = user;
 	}
 
 	@Override
 	public int doStartTag(){
 		String header = new String();
-		if(nickname.isEmpty()){
+		if(user == null){
 			header = "<img class=logo src="+LOGO_IMG_PATH+" alt=Logo>"
 					+ "<div class=dropdown>"
 					+ "<img class=dropimg src="+MENU_IMG_PATH+" alt=Menu>"
@@ -55,7 +54,7 @@ public class CustomHeaderTag extends TagSupport{
 					+ "<a href="+SIGN_UP_PAGE_PATH+" class=sign-up>Sign&nbsp;up</a>"
 					+ "<a href="+LOGIN_PAGE_PATH+" class=login>Log&nbsp;in</a>";
 		} else{
-			if(role.equals("admin")){
+			if(user.getRole().getRoleName().equals("admin")){
 				header = "<img class=logo src="+LOGO_IMG_PATH+" alt=Logo>"
 						+ "<div class=dropdown>"
 						+ "<img class=dropimg src="+MENU_IMG_PATH+" alt=Menu>"
@@ -89,7 +88,7 @@ public class CustomHeaderTag extends TagSupport{
 					    + "<input value=profile type=hidden name=command>"
 					    + "</form>"
 					    + "<img src="+ADMIN_ICON_PATH+" alt=profile class=user-img>"
-					    + "<div class=profile-nickname>Hi,"+nickname+"</div>";
+					    + "<div class=profile-nickname>Hi,"+user.getNickname()+"</div>";
 				header +=  "<form action=/MusicWebService/MusicServiceServlet method=POST id=form>"
 						+ "<input type=hidden name=command value=admin-page>"
 						+ "</form>";
@@ -125,7 +124,7 @@ public class CustomHeaderTag extends TagSupport{
 						+ "<input value=profile type=hidden name=command>"
 						+ "</form>"
 						+ "<img src="+USER_ICON_PATH+" alt=profile class=user-img>"
-						+ "<div class=profile-nickname>Hi,"+nickname+"</div>";
+						+ "<div class=profile-nickname>Hi,"+user.getNickname()+"</div>";
 			}
 		}
 		header += "<form action=/MusicWebService/MusicServiceServlet method=POST id=tracks>"

@@ -3,10 +3,10 @@ h1{
 	margin-top:80px;
 }
 section{
-	min-width:640px;
+	min-width:400px;
 	float:left;
 	display:inline-block;
-	width:50%;
+	width:30%;
 }
 .show-add-form{
 	width:100px;
@@ -50,7 +50,7 @@ form input:hover{
 aside{
 	display:inline-block;
 	float:right;
-	width:50%;
+	width:70%;
 	min-width:500px;
 	text-align:center;
 }
@@ -66,13 +66,16 @@ textarea{
 #unban-user{
 	margin-left:30px;
 }
+#assign-discount{
+	margin-left:30px;
+}
 .users-list{
-	height:500px;
+	height:300px;
 	overflow:auto;
 	min-width:400px;
 }	
 .track-list{
-	height:500px;
+	height:300px;
 	overflow:auto;
 	min-width:400px;
 }	

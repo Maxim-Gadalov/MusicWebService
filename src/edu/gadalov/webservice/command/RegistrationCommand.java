@@ -21,13 +21,12 @@ public class RegistrationCommand extends AbstractCommand{
 		User user = new User(1,new Role(1,"user"),nickname,email,password,new Discount(1,0),null,null);
 		RegistrationService service = new RegistrationService();
 		message = service.registration(user);
-		request.setAttribute("errorMessage", message);
 		if(message.isEmpty()){
 			page = MAIN_PAGE;
-			request.getSession().setAttribute("nickname", nickname);
-			request.getSession().setAttribute("role", user.getRole().getRoleName());
+			request.getSession().setAttribute("user", user);
+		} else{
+			request.setAttribute("errorMessage", message);
 		}
 		return page;
 	}
-
 }

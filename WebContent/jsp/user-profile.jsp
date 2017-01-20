@@ -15,10 +15,20 @@
 <link rel="stylesheet" href="<c:url value="/normalize.css" context="/MusicWebService/CSS"/>">
 <link rel="stylesheet" href="<c:url value="/screen.css" context="/MusicWebService/CSS"/>">
 <link rel="stylesheet" href="<c:url value="/profile-content.css" context="/MusicWebService/CSS"/>">
+<script>
+  document.addEventListener('play', function(e){
+	    var audios = document.getElementsByTagName('audio');
+	    for(var i = 0, len = audios.length; i < len;i++){
+	        if(audios[i] != e.target){
+	            audios[i].pause();
+	        }
+	    }
+	}, true);
+  </script>
 </head>
 <body>
 <header>
-    <ctg:header-custom nickname="${nickname}" role="${role}"/>
+  <ctg:header-custom user="${user}"/> 
   </header>
   <section class="user-info"> 
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
@@ -27,16 +37,19 @@
   </form>
   <img class="profile-img" src="IMG/user.png" alt="user">
   <div>
-  Nickname : ${userNickname}
+  Nickname : ${user.nickname}
   </div>
   <div>
-  Email : ${userEmail}
+  Email : ${user.email}
   </div>
   <div>
-  Phone number : ${phnumber}
+  Phone number : ${user.phoneNumber}
   </div>
   <div>
-  Skype : ${skype}
+  Skype : ${user.skype}
+  </div>
+  <div>
+  Discount : ${user.bonus.bonus}%
   </div>
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
   <input class="change-password" type="submit" value="Change password">
@@ -44,15 +57,23 @@
   </form>
   </section>
   <aside class="user-tracks">
-  tracks<br>
-  Track one<br>
-  Track one<br>
-  Track one<br>
-  Track one<br>
-  Track one<br>
-  Track one<br>
-  Track one<br>
-  Track one<br>
+  <h3 style="text-align:center;">Purchased music : </h3>
+  <div style="color:red;">
+  ${errorMessage}
+  </div>
+  <c:forEach  var="elem" items="${trackList}" varStatus="status">
+  <div class="track">
+  <span onclick="showPlayer('<c:out value="${elem.id}"/>'); return false;">
+  <c:out value="${elem.singer}"/> - 
+  <c:out value="${elem.trackName}"/>
+  </span>
+  <div id=<c:out value="${elem.id}"/> style="display:none;">
+  <audio id="player" controls>
+  <source src="<c:out value="${elem.filePath}"/>" type="audio/mpeg">
+  </audio>
+  </div>
+  </div>
+  </c:forEach>
   </aside>
   <footer class="footer"> 
   EDM Portal<br>
@@ -60,5 +81,6 @@
   E-mail:gmaksim2012@gmail.com<br>
   Skype:gmaxim2111
   </footer>
+  <script src="JS/track.js"></script>
 </body>
 </html>

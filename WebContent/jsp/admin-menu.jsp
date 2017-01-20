@@ -18,12 +18,12 @@
 </head>
 <body>
 <header>
-<ctg:header-custom nickname="${nickname}" role="${role}"/> 
+<ctg:header-custom user="${user}"/> 
 </header>
 <h1>Welcome to the administration menu</h1>
 <section>
 <div style="color:red;">
-Good whatever time of day applies, ${nickname}. 
+Good whatever time of day applies, ${user.nickname}. 
 You are in the menu of web service administration. 
 We remind you that you should not exercise the authority given to you by project managers for personal advantage. 
 All decisions must be clear and consistent. 
@@ -73,7 +73,7 @@ Thank you for being with us.
   <div id="ban-user" style="display:none;">
   Nickname or E-mail :<br>
   <input type="text" name="user-login" required placeholder="*"><br>
-  <textarea name="reason" rows="5" cols="50" required>Reason of ban</textarea><br>
+  <textarea name="reason" rows="5" cols="30" required>Reason of ban</textarea><br>
   <input class="button" type="submit" value="Submit">
   <input class="button" type="reset" value="Reset">
   </div>
@@ -88,6 +88,22 @@ Thank you for being with us.
   <input class="button" type="reset" value="Reset">
   </div>
   <input type="hidden" name="command" value="unban-user">
+  </form>
+  
+  <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
+  <button class="show-add-form" onclick="showAddTrackForm('assign-discount')">Assign discount</button>
+  <div id="assign-discount" style="display:none;">
+  Nickname or E-mail :<br>
+  <input type="text" name="user-login" required placeholder="*"><br>
+  <select name="discount">
+    <c:forEach  var="elem" items="${list_discounts}" varStatus="status">
+    <option value="${elem.id}">${elem.bonus}%</option>
+    </c:forEach>
+  </select>
+  <input class="button" type="submit" value="Submit">
+  <input class="button" type="reset" value="Reset">
+  </div>
+  <input type="hidden" name="command" value="assign-discount">
   </form>
 </section>
 <aside>
@@ -112,7 +128,29 @@ Thank you for being with us.
   </c:forEach>
 </table>
 </div>
-
+<div class="track-list">
+<table>
+<caption> Tracks list</caption>
+<tr>
+<th>Id</th>
+<th>Singer</th>
+<th>Track name</th>
+<th>Cost</th>
+<th>Genre</th>
+<th>Admin</th>
+</tr> 
+<c:forEach  var="elem" items="${list_tracks}" varStatus="status">
+  <tr>
+  <td><c:out value="${ elem.id }" /></td>
+    <td><c:out value="${ elem.singer }" /></td>
+    <td><c:out value="${ elem.trackName }" /></td>
+    <td><c:out value="${ elem.cost }" /></td>
+    <td><c:out value="${ elem.genre }" /></td>
+    <td><c:out value="${ elem.user.nickname }" /></td>
+ </tr>
+  </c:forEach>
+</table>
+</div>
 
 </aside>
 

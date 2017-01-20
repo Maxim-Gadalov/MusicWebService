@@ -21,6 +21,7 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	private static final String SELECT_TRACK_BY_ID = "SELECT * FROM `mydb`.`audio_tracks` WHERE `id_audio_track` = ?";
 	private static final String SELECT_TRACKS_BY_GENRE = "SELECT * FROM `mydb`.`audio_tracks` WHERE `genre` = ?";
 	private static final String DELETE_TRACK_BY_ID = "DELETE * FROM `mydb`.`audio_tracks` WHERE `id_audio_track` = ?";
+	private static final String SELECT_VISIBLE_TRACKS = "SELECT * FROM `mydb`.`audio_tracks` WHERE `visibility` = 1";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
 	public Connection getConnection(){
 		return cn;
@@ -44,7 +45,8 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 						 rs.getString("albom"),
 						 rs.getString("music_file"),
 						 rs.getFloat("cost"),
-						 rs.getString("genre"));
+						 rs.getString("genre"),
+						 rs.getBoolean("visibility"));
 				 tracks.add(track);
 				 } finally{
 					 userDAO.close(userDAO.getConnection());
@@ -78,7 +80,8 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 						 rs.getString("albom"),
 						 rs.getString("music_file"),
 						 rs.getFloat("cost"),
-						 rs.getString("genre"));
+						 rs.getString("genre"),
+						 rs.getBoolean("visibility"));
 				 } finally{
 					 userDAO.close(userDAO.getConnection());
 				 }
@@ -157,7 +160,8 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 						 rs.getString("albom"),
 						 rs.getString("music_file"),
 						 rs.getFloat("cost"),
-						 rs.getString("genre"));
+						 rs.getString("genre"),
+						 rs.getBoolean("visibility"));
 					tracks.add(track);
 				 } finally{
 					 userDAO.close(userDAO.getConnection());
@@ -170,5 +174,37 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 			 statementClose(st);
 		 }
 		return tracks;	
+	}
+	public List<AudioTrack> findVisibleTracks() {
+		 List<AudioTrack> tracks = new ArrayList<>();
+		 Statement st = null;
+		 try{
+			 st = cn.createStatement();
+			 ResultSet rs = st.executeQuery(SELECT_VISIBLE_TRACKS);
+			 while(rs.next()){
+				 UserDAO userDAO = new UserDAO();
+				 try{
+				 AudioTrack track = new AudioTrack(
+						 rs.getInt("id_audio_track"),
+						 userDAO.findById(rs.getInt("id_admin")),
+						 rs.getString("singer"),
+						 rs.getString("track_name"),
+						 rs.getString("albom"),
+						 rs.getString("music_file"),
+						 rs.getFloat("cost"),
+						 rs.getString("genre"),
+						 rs.getBoolean("visibility"));
+				 tracks.add(track);
+				 } finally{
+					 userDAO.close(userDAO.getConnection());
+				 }
+			 }
+		 } catch(SQLException e){
+			 LOG.error(e);
+		 }
+		 finally{
+			 statementClose(st);
+		 }
+		return tracks;
 	}
 }

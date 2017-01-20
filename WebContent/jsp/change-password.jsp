@@ -18,7 +18,7 @@
 </head>
 <body>
 <header>
-    <ctg:header-custom nickname="${nickname}" role="${role}"/>
+  <ctg:header-custom user="${user}"/> 
   </header>
   <section>
   <form class="change-password-form" id="change-password" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">

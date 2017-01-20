@@ -9,9 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
+import edu.gadalov.webservice.connection.ConnectionPool;
 import edu.gadalov.webservice.dao.AudioTrackDAO;
+import edu.gadalov.webservice.dao.DiscountDAO;
 import edu.gadalov.webservice.dao.UserDAO;
 import edu.gadalov.webservice.entity.AudioTrack;
+import edu.gadalov.webservice.entity.Discount;
 import edu.gadalov.webservice.entity.User;
 
 public class AdminMenuService {
@@ -65,5 +68,15 @@ public class AdminMenuService {
 		}
 		return result;
 		
+	}
+	public List<Discount> getDiscounts(){
+		List<Discount> list = new ArrayList<>();
+		DiscountDAO discountDAO = new DiscountDAO(ConnectionPool.getInstance().getConnectionFromPool());
+		try{
+			list = discountDAO.findAll();
+		} finally{
+			discountDAO.close(discountDAO.getConnection());
+		}
+		return list;
 	}
 }

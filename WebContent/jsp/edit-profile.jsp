@@ -18,24 +18,24 @@
 </head>
 <body>
 <header>
-    <ctg:header-custom nickname="${nickname}" role="${role}"/>
+ <ctg:header-custom user="${user}"/> 
  </header>
  <form class="edit-form" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST"> 
   <div>
   Nickname :
-  <input type="text" name="userNickname" value="${userNickname}" required placeholder="*"><br>
+  <input type="text" name="userNickname" value="${user.nickname}" required placeholder="*"><br>
   </div>
   <div>
   Email :
-  <input type="text" name="userEmail" value="${userEmail}" required placeholder="*"><br>
+  <input type="text" name="userEmail" value="${user.email}" required placeholder="*"><br>
   </div>
   <div>
   Skype :
-  <input type="text" name="userSkype" value="${skype}"><br>
+  <input type="text" name="userSkype" value="${user.skype}"><br>
   </div>
   <div>
   Phone number :
-  <input type="text" name="userNumber" value="${phnumber}"><br>
+  <input type="text" name="userNumber" value="${user.phoneNumber}"><br>
   </div>
   <div class="error">
   ${errorMessage}
