@@ -19,9 +19,10 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	private static final String ADD_TRACK ="INSERT INTO `mydb`.`audio_tracks` (`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`albom`,`genre`) VALUES (?,?,?,?,?,?,?)";
 	private static final String SELECT_ALL_TRACKS = "SELECT * FROM `mydb`.`audio_tracks`";
 	private static final String SELECT_TRACK_BY_ID = "SELECT * FROM `mydb`.`audio_tracks` WHERE `id_audio_track` = ?";
-	private static final String SELECT_TRACKS_BY_GENRE = "SELECT * FROM `mydb`.`audio_tracks` WHERE `genre` = ?";
-	private static final String DELETE_TRACK_BY_ID = "DELETE * FROM `mydb`.`audio_tracks` WHERE `id_audio_track` = ?";
+	private static final String SELECT_TRACKS_BY_GENRE = "SELECT * FROM `mydb`.`audio_tracks` WHERE `genre` = ? AND `visibility`= 1";
+	private static final String DELETE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `visibility`= 0 WHERE `singer` = ? AND `track_name` = ?";
 	private static final String SELECT_VISIBLE_TRACKS = "SELECT * FROM `mydb`.`audio_tracks` WHERE `visibility` = 1";
+	private static final String UPDATE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `singer` = ?, `track_name` = ?, `cost` = ?, `albom` = ?, `genre` = ? WHERE `id_audio_track` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
 	public Connection getConnection(){
 		return cn;
@@ -126,20 +127,7 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 
 	@Override
 	public boolean deleteById(Integer id) {
-		boolean result = false;
-		PreparedStatement st = null;
-		try{
-			st = cn.prepareStatement(DELETE_TRACK_BY_ID);
-			st.setInt(1, id);
-			st.executeUpdate();
-			result = true;
-		} catch (SQLException e){
-			LOG.error(e);
-		}
-		finally{
-			statementClose(st);
-		}
-		return result;
+		throw new UnsupportedOperationException();
 	}
 	public List<AudioTrack> findByGenre(String genre){
 		List<AudioTrack> tracks = new ArrayList<>();
@@ -147,7 +135,6 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 		try{
 			st = cn.prepareStatement(SELECT_TRACKS_BY_GENRE);
 			st.setString(1, genre);
-			st.executeUpdate();
 			ResultSet rs = st.executeQuery();
 			while(rs.next()){
 				 UserDAO userDAO = new UserDAO();
@@ -206,5 +193,45 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 			 statementClose(st);
 		 }
 		return tracks;
+	}
+	public boolean updateTrack(AudioTrack entity){
+		boolean result = false;
+		PreparedStatement st = null;
+		try{
+			st = cn.prepareStatement(UPDATE_TRACK);
+			st.setString(1,entity.getSinger());
+			st.setString(2, entity.getTrackName());
+			st.setFloat(3, entity.getCost());
+			st.setString(4, entity.getAlbum());
+			st.setString(5, entity.getGenre());
+			st.setInt(6, entity.getId());
+			st.executeUpdate();
+			result = true;
+		}catch(SQLException e){
+			LOG.error(e);
+		}
+		finally{
+			statementClose(st);
+		}
+		return result;
+	
+	}
+	public boolean deleteTrack(String singer, String trackName){
+		boolean result = false;
+		PreparedStatement st = null;
+		try{
+			st = cn.prepareStatement(DELETE_TRACK);
+			st.setString(1, singer);
+			st.setString(2, trackName);
+			st.executeUpdate();
+			result = true;
+		} catch (SQLException e){
+			LOG.error(e);
+		}
+		finally{
+			statementClose(st);
+		}
+		return result;
+		
 	}
 }

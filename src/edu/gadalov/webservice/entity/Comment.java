@@ -9,7 +9,6 @@ public class Comment {
 	private String text;
 	private Timestamp date;
 	public Comment(int id, User user, AudioTrack track, String text, Timestamp date) {
-		super();
 		this.id = id;
 		this.user = user;
 		this.track = track;
@@ -46,5 +45,4 @@ public class Comment {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}	
-
 }

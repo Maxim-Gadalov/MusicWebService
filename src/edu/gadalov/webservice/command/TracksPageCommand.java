@@ -16,7 +16,13 @@ public class TracksPageCommand extends AbstractCommand{
 	public String execute(HttpServletRequest request) {
 		TrackService service = new TrackService();
 		List<AudioTrack> list = null;
-		list = service.getAllTracks();
+		String genre = request.getParameter("genre");
+		System.out.println(genre);
+		if(genre.isEmpty()){
+		list = service.getVisibleTracks();
+		} else {
+			list = service.getVisibleTracksByGenre(genre);
+		}
 		if(!list.isEmpty()){
 			if(list.size() > MAX_TRACKS_ON_PAGE){
 				request.setAttribute("trackList", list.subList(0, MAX_TRACKS_ON_PAGE));

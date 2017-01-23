@@ -20,7 +20,7 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 	private final static String ADD_USER = "INSERT INTO `mydb`.`users` (`id_role`,`nickname`,`email`,`password`,`id_bonus`) VALUES (?,?,?,MD5(?),?)";
 	private final static String SELECT_ALL_USERS = "SELECT * FROM `mydb`.`users`";
 	private final static String SELECT_USER_BY_ID = "SELECT * FROM `mydb`.`users` WHERE `id_users` = ?";
-	private final static String DELETE_USER_BY_ID = "DELETE * FROM `mudb`.`users` WHERE `id_users` = ?";
+	private final static String DELETE_USER_BY_ID = "DELETE * FROM `mydb`.`users` WHERE `id_users` = ?";
 	private final static String SELECT_USER_BY_EMAIL = "SELECT * FROM `mydb`.`users` WHERE `email` = ?";
 	private final static String SELECT_USER_BY_NICKNAME = "SELECT * FROM `mydb`.`users` WHERE `nickname` = ?";
 	private final static String UPDATE_USER = "UPDATE `mydb`.`users` SET `nickname` = ? , `email` = ? , `skype` = ? , `phone_number` = ? WHERE `id_users` = ?";

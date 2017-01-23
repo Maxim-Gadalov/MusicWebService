@@ -26,4 +26,19 @@
         <rtexprvalue>true</rtexprvalue>
      </attribute>
    </tag>
+   <tag>
+     <name>comments-custom</name>
+     <tag-class>edu.gadalov.webservice.customtag.CustomCommentTag</tag-class>
+     <body-content>empty</body-content>
+     <attribute>
+        <name>user</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+     </attribute>
+     <attribute>
+        <name>track</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+     </attribute>
+   </tag>
 </taglib>

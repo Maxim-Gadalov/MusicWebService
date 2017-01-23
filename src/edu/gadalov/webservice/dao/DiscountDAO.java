@@ -15,11 +15,12 @@ import edu.gadalov.webservice.entity.Discount;
 
 public class DiscountDAO extends AbstractDAO<Integer, Discount>{
 	private static final Logger LOG = LogManager.getLogger(DiscountDAO.class);
-	private final static String SELECT_USER_DISCOUNT_BY_ID = "SELECT `discounts_value` FROM `mydb`.`discounts` WHERE `id_discounts` = ";
+	private final static String SELECT_USER_DISCOUNT_BY_ID = "SELECT `discounts_value` FROM `mydb`.`discounts` WHERE `id_discounts` = ?";
 	private final static String SELECT_DISCOUNTS = "SELECT * FROM `mydb`.`discounts`";
 	private final static String ADD_DISCOUNT = "INSERT INTO `mydb`.`discounts`(`discounts_value`) VALUES (?)";
 	private final static String DELETE_DISCOUNT_BY_ID = "DELETE * FROM `mudb`.`discounts` WHERE `id_discounts` = ?";
 	private final static String DELETE_DISCOUNT = "DELETE * FROM `mudb`.`discounts` WHERE `discounts_value` = ?";
+	private final static String SELECT_DISCOUNT_BY_VALUE = "SELECT `discounts_value` FROM `mydb`.`discounts` WHERE `discounts_value` = ?";
 	private Connection cn;
 	public DiscountDAO(Connection cn){
 		this.cn = cn;
@@ -52,13 +53,14 @@ public class DiscountDAO extends AbstractDAO<Integer, Discount>{
 
 	@Override
 	public Discount findById(Integer id) {
-		Statement st = null;
+		PreparedStatement st = null;
 		Discount bonus = null;
 		try{
-			st = cn.createStatement();
-			ResultSet rs = st.executeQuery(SELECT_USER_DISCOUNT_BY_ID+id);
+			st = cn.prepareStatement(SELECT_USER_DISCOUNT_BY_ID);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
 			while(rs.next()){
-			bonus = new Discount(id,rs.getInt("discounts_value"));
+				bonus = new Discount(id,rs.getInt("discounts_value"));
 			}
 		}
 		catch(SQLException e){
@@ -123,6 +125,25 @@ public class DiscountDAO extends AbstractDAO<Integer, Discount>{
 			statementClose(st);
 		}
 		return result;
+	}
+	public Discount findByValue(Integer value) {
+		PreparedStatement st = null;
+		Discount bonus = null;
+		try{
+			st = cn.prepareStatement(SELECT_DISCOUNT_BY_VALUE);
+			st.setInt(1, value);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()){
+				bonus = new Discount(rs.getInt("id_discounts"),value);
+			}
+		}
+		catch(SQLException e){
+			LOG.error(e);
+		}
+		finally{
+			statementClose(st);	
+		}
+		return bonus;
 	}
 
 }

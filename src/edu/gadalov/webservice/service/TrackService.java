@@ -76,5 +76,35 @@ public class TrackService {
 		}
 		return list;
 	}
+	public List<AudioTrack> getVisibleTracksByGenre(String genre){
+		List<AudioTrack> list = new ArrayList<>();
+		AudioTrackDAO trackDAO = new AudioTrackDAO();
+		try{
+			list = trackDAO.findByGenre(genre);
+		} finally{
+			trackDAO.close(trackDAO.getConnection());
+		}
+		return list;
+	}
+	public boolean deleteTrack(String singer, String trackName){
+		boolean result = false;
+		AudioTrackDAO trackDAO = new AudioTrackDAO();
+		try{
+			result = trackDAO.deleteTrack(singer, trackName);
+		} finally{
+			trackDAO.close(trackDAO.getConnection());
+		}
+		return result;
+	}
+	public boolean updateTrack(AudioTrack track){
+		boolean result = false;
+		AudioTrackDAO trackDAO = new AudioTrackDAO();
+		try{
+			result = trackDAO.updateTrack(track);
+		} finally{
+			trackDAO.close(trackDAO.getConnection());
+		}
+		return result;
+	}
 
 }

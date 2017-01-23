@@ -32,6 +32,22 @@ public class CommandManager {
 			return new BuyTrackPageCommand();
 		case "transaction":
 			return new BuyTrackCommand();
+		case "add-comment":
+			return new AddCommentCommand();
+		case "edit-comment":
+			return new EditCommentCommand();
+		case "remove-track":
+			return new DeleteTrackCommand();
+		case "ban-user":
+			return new BanUserCommand();
+		case "unban-user":
+			return new UnbanUserCommand();
+		case "assign-discount":
+			return new AssignDiscountCommand();
+		case "edit-track":
+			return new EditTrackPageCommand();
+		case "save-track":
+			return new EditTrackCommand();
 		default:
 				return new DefaultCommand();
 		}	

@@ -15,7 +15,6 @@ import edu.gadalov.webservice.validation.TrackValidation;
 
 public class AddTrackCommand extends AdminPageCommand{
 	private static final Logger LOG = LogManager.getLogger(AddTrackCommand.class);
-	private static final String ADMIN_PAGE = "jsp/admin-menu.jsp";
 	private static final String MAIN_PAGE = "main.jsp";
 	
 	@Override
@@ -46,7 +45,6 @@ public class AddTrackCommand extends AdminPageCommand{
 		} else {
 			request.setAttribute("addTrackError", errorMessage);
 		}
-		super.execute(request);
-		return ADMIN_PAGE;
+		return super.execute(request);
 	}
 }

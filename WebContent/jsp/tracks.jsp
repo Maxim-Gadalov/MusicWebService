@@ -47,11 +47,21 @@
   <audio id="player" controls>
   <source src="<c:out value="${elem.filePath}"/>" type="audio/mpeg">
   </audio>
+  <ctg:comments-custom user="${user}" track="${elem}"/>
   </div>
   <input type="hidden" name="command" value="buy-track">
   </div>
   </form>
+  <form id="comment<c:out value="${elem.id}"/>" action="<c:url value="/MusicServiceServlet" context="/MusicWebService"/>" method="POST">
+  <input type=hidden name=idTrack value="<c:out value="${elem.id}"/>">
+  <input type=hidden name=command value=add-comment>
+  </form>
   </c:forEach>
+  <form id="edit-form" action="<c:url value="/MusicServiceServlet" context="/MusicWebService"/>" method="POST">
+  <input type=hidden name=command value=edit-comment>
+  <input type="hidden" id="commentId" name="commentId" value="">
+  </form>
+
   <ctg:pagination-custom numberOfElements="${numberOfElements}"/>
   </section>  
 <footer class="footer"> 

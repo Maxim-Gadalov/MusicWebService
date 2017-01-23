@@ -35,4 +35,14 @@ public class UserService {
 	public boolean isAdmin(User user){
 		return ADMIN_ROLE_NAME.equals(user.getRole().getRoleName());
 	}
+	public User getUser(int id){
+		User user = null;
+		UserDAO userDAO = new UserDAO();
+		try{
+			user = userDAO.findById(id);
+		} finally{
+			userDAO.close(userDAO.getConnection());
+		}
+		return user;
+	}
 }

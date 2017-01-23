@@ -47,7 +47,7 @@ Thank you for being with us.
   <option value="Trance" selected>Trance</option>
   <option value="House">House</option>
   <option value="Dubstep">Dubstep</option>
-  <option value="Drum & Bass">Drum & Bass</option>
+  <option value="Drum_&_Bass">Drum & Bass</option>
   <option value="Techno">Techno</option>
   </select><br>
   <input name="file-path" type="file" accept="audio/*"><br>
@@ -57,6 +57,9 @@ Thank you for being with us.
   <input type="hidden" name="command" value="addTrack">
   </form>
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
+  <div style="color:red;">
+  ${removeErrorMessage}
+  </div>
   <button class="show-add-form" onclick="showAddTrackForm('remove-track')">Remove track</button>
   <div id="remove-track" style="display:none;">
   Singer :<br>
@@ -68,7 +71,23 @@ Thank you for being with us.
   </div>
   <input type="hidden" name="command" value="remove-track">
   </form>
+  <div style="color:red;">
+  ${editErrorMessage}
+  </div>
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
+  <button class="show-add-form" onclick="showAddTrackForm('edit-track')">Edit track</button>
+  <div id="edit-track" style="display:none;">
+  Id track :<br>
+  <input type="number" name="idTrack" required placeholder="*"><br>
+  <input class="button" type="submit" value="Submit">
+  <input class="button" type="reset" value="Reset">
+  </div>
+  <input type="hidden" name="command" value="edit-track">
+  </form>
+  <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
+  <div style="color:red;">
+  ${banErrorMessage}
+  </div>
   <button class="show-add-form" onclick="showAddTrackForm('ban-user')">Ban user</button>
   <div id="ban-user" style="display:none;">
   Nickname or E-mail :<br>
@@ -80,6 +99,9 @@ Thank you for being with us.
   <input type="hidden" name="command" value="ban-user">
   </form>
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
+  <div style="color:red;">
+  ${unbanErrorMessage}
+  </div>
   <button class="show-add-form" onclick="showAddTrackForm('unban-user')">Unban user</button>
   <div id="unban-user" style="display:none;">
   Nickname or E-mail :<br>
@@ -91,15 +113,18 @@ Thank you for being with us.
   </form>
   
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
+  <div style="color:red;">
+  ${discountErrorMessage}
+  </div>
   <button class="show-add-form" onclick="showAddTrackForm('assign-discount')">Assign discount</button>
   <div id="assign-discount" style="display:none;">
   Nickname or E-mail :<br>
-  <input type="text" name="user-login" required placeholder="*"><br>
+  <input type="text" name="user-login" required placeholder="*">
   <select name="discount">
     <c:forEach  var="elem" items="${list_discounts}" varStatus="status">
     <option value="${elem.id}">${elem.bonus}%</option>
     </c:forEach>
-  </select>
+  </select><br>
   <input class="button" type="submit" value="Submit">
   <input class="button" type="reset" value="Reset">
   </div>
@@ -138,6 +163,7 @@ Thank you for being with us.
 <th>Cost</th>
 <th>Genre</th>
 <th>Admin</th>
+<th>Visibility</th>
 </tr> 
 <c:forEach  var="elem" items="${list_tracks}" varStatus="status">
   <tr>
@@ -147,6 +173,7 @@ Thank you for being with us.
     <td><c:out value="${ elem.cost }" /></td>
     <td><c:out value="${ elem.genre }" /></td>
     <td><c:out value="${ elem.user.nickname }" /></td>
+    <td><c:out value="${ elem.visibility }" /></td>
  </tr>
   </c:forEach>
 </table>
