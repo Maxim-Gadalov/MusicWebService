@@ -16,6 +16,10 @@ import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.entity.TrackOrder;
 import edu.gadalov.webservice.entity.User;
 
+/**TrackOrder DAO class, @see {@link TrackOrder#TrackOrder(User, AudioTrack)}
+ * @author Maxim Gadalov
+ *
+ */
 public class TrackOrderDAO extends AbstractDAO<Integer, TrackOrder>{
 	private static final Logger LOG = LogManager.getLogger(TrackOrderDAO.class);
 	private static final String SELECT_ALL_ORDERS = "SELECT * FROM `mydb`.`track_order`";
@@ -24,6 +28,9 @@ public class TrackOrderDAO extends AbstractDAO<Integer, TrackOrder>{
 	private static final String SELECT_ORDERS_BY_TRACK = "SELECT * FROM `mydb`.`track_order` WHERE `id_audio_track` = ";
 	private static final String SELECT_ORDER = "SELECT * FROM `mydb`.`track_order` WHERE `id_user` = ? AND `id_audio_track` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
+	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
+	 * @return connection
+	 */
 	public Connection getConnection(){
 		return this.cn;
 	}
@@ -116,6 +123,10 @@ public class TrackOrderDAO extends AbstractDAO<Integer, TrackOrder>{
 					}
 		return orders;	
     }
+	/**Return list of TrackOrder objects found by AudioTrack
+	 * @param entity - AudioTrack @see {@link AudioTrack#AudioTrack(int, User, String, String, String, String, float, String, boolean)}
+	 * @return list of TrackOrders 
+	 */
 	public List<TrackOrder> findByTrack(AudioTrack entity) {
 		List<TrackOrder> orders = new ArrayList<>();
 		Statement st = null;
@@ -140,6 +151,10 @@ public class TrackOrderDAO extends AbstractDAO<Integer, TrackOrder>{
 			}
 			return orders;	
 	}
+	/**Check track order
+	 * @param order - TrackOrder @see {@link TrackOrder#TrackOrder(User, AudioTrack)}
+	 * @return true if track was ordered earlier, false - otherwise
+	 */
 	public boolean findByTrackOrder(TrackOrder order){
 		boolean result = false;
 		PreparedStatement st = null;

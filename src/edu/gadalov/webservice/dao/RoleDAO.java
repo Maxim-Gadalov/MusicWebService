@@ -11,10 +11,17 @@ import org.apache.logging.log4j.Logger;
 
 import edu.gadalov.webservice.entity.Role;
 
+/**Role DAO class, @see {@link Role#Role(int, String)}.
+ * @author Maxim Gadalov
+ *
+ */
 public class RoleDAO extends AbstractDAO<Integer, Role>{
 	private static final Logger LOG = LogManager.getLogger(RoleDAO.class);
 	private final static String SELECT_USER_ROLE_BY_ID = "SELECT `roles_name` FROM `mydb`.`roles` WHERE `id_roles` = ";
 	private Connection cn;
+	/**Create object with following field 
+	 * @param cn - connection to the database
+	 */
 	public RoleDAO(Connection cn){
 		this.cn = cn;		
 	}

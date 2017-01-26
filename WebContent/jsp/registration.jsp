@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="ctg" uri="customtags" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,39 +25,39 @@
   </header>
   <section>
   <form class="registration-form" id="registration" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
-  <h2>Registration</h2>
+  <h2><fmt:message key="registration"/></h2>
   <label for="nickname">
-  Nickname:<br>
-  <input type="text" name="nickname" id="username"  required placeholder="*">
+  <fmt:message key="my_profile.nickname"/>:<br>
+  <input type="text" name="nickname" id="username" maxlength="45" required placeholder="*">
   <ul class="checker">
-    <li>At least 5 characters long</li>
-    <li>Must only contain letters and numbers (no special characters)</li>
+    <li><fmt:message key="registration.nickname_long"/></li>
+    <li><fmt:message key="registration.nickname_contain"/></li>
   </ul>
   </label>
   <label for="email">
-  E-mail:<br>
-  <input type="text" name="mail" id="email" required placeholder="*">
+  <fmt:message key="my_profile.email"/>:<br>
+  <input type="text" name="mail" id="email" maxlength="60" required placeholder="*">
   <ul class="checker">
-    <li> E-mail must be like "username@hostname"</li>
+    <li><fmt:message key="registration.email"/></li>
   </ul>
   </label>
   <label for="password">
-  Password:<br>
+  <fmt:message key="my_profile.pass"/>:<br>
   <input type="password" name="psw" id="password" maxlength="30" required placeholder="*">
   <ul class="checker">
-    <li>At least 8 characters long (and less than 30 characters)</li>
-	<li>Contains at least 1 number</li>
-	<li>Contains at least 1 lowercase letter</li>
-	<li>Contains at least 1 uppercase letter</li>
+    <li><fmt:message key="registration.psw_long"/></li>
+	<li><fmt:message key="registration.psw_number"/></li>
+	<li><fmt:message key="registration.psw_lcase"/></li>
+	<li><fmt:message key="registration.psw_ucase"/></li>
   </ul>
   </label>
-  Confirm password:<br>
+  <fmt:message key="my_profile.cpsw"/>:<br>
   <input type="password" name="cpsw" id="confirm_password" maxlength="30"  required placeholder="*"><br>
   <div style="color:red; padding-top:15px; text-aling:center;">
    ${errorMessage}
   </div>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   <input value="registration" type="hidden" name="command">
   </form>
   </section>

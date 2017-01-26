@@ -39,7 +39,6 @@ public class AdminMenuService {
 		}
 		return list;
 	}
-	// перенести метод в команду и затестить 
 	public String uploadTrack(HttpServletRequest request) throws IOException, ServletException{
 		String savePath = request.getServletContext().getRealPath("") + SAVE_DIR;
 

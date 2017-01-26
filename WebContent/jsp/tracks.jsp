@@ -61,7 +61,6 @@
   <input type=hidden name=command value=edit-comment>
   <input type="hidden" id="commentId" name="commentId" value="">
   </form>
-
   <ctg:pagination-custom numberOfElements="${numberOfElements}"/>
   </section>  
 <footer class="footer"> 

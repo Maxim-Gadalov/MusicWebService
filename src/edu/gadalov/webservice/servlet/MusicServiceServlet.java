@@ -27,13 +27,22 @@ public class MusicServiceServlet extends HttpServlet {
 		ConnectionPool.getInstance();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//add-comment
+		String command = request.getParameter("command");
+		CommandManager manager = new CommandManager();
+		String forwardPage = manager.getCommand(command).execute(request);
+		request.getRequestDispatcher(forwardPage).forward(request, response);
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getParameter("command");
 		CommandManager manager = new CommandManager();
 		String forwardPage = manager.getCommand(command).execute(request);
-		request.getRequestDispatcher(forwardPage).forward(request, response);
+		if(request.getAttribute("success") == null){
+			request.getRequestDispatcher(forwardPage).forward(request, response);
+		} else{
+			response.sendRedirect(forwardPage);
+		}
 	}
 	public void destroy() {
 			ConnectionPool.getInstance().destroyPool();

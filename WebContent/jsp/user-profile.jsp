@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ctg" uri="customtags" %> 
-<!DOCTYPE>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -32,32 +35,32 @@
   </header>
   <section class="user-info"> 
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
-  <input class="edit-profile" type="submit" value="Edit profile">
+  <input class="edit-profile" type="submit" value="<fmt:message key="my_profile.edit_profile"/>">
   <input type="hidden" value="edit-profile" name="command">
   </form>
   <img class="profile-img" src="IMG/user.png" alt="user">
   <div>
-  Nickname : ${user.nickname}
+  <fmt:message key="my_profile.nickname"/> : ${user.nickname}
   </div>
   <div>
-  Email : ${user.email}
+  <fmt:message key="my_profile.email"/> : ${user.email}
   </div>
   <div>
-  Phone number : ${user.phoneNumber}
+  <fmt:message key="my_profile.phone_number"/> : ${user.phoneNumber}
   </div>
   <div>
   Skype : ${user.skype}
   </div>
   <div>
-  Discount : ${user.bonus.bonus}%
+  <fmt:message key="my_profile.discount"/> : ${user.bonus.bonus}%
   </div>
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
-  <input class="change-password" type="submit" value="Change password">
+  <input class="change-password" type="submit" value="<fmt:message key="my_profile.change_pass"/>">
   <input type="hidden" name="command" value="change-password-page">
   </form>
   </section>
   <aside class="user-tracks">
-  <h3 style="text-align:center;">Purchased music : </h3>
+  <h3 style="text-align:center;"><fmt:message key="purchase_music"/> : </h3>
   <div style="color:red;">
   ${errorMessage}
   </div>

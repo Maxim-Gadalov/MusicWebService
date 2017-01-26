@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ctg" uri="customtags" %>     
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/>    
 <!DOCTYPE>
 <html lang="en">
 <head>
@@ -22,11 +25,11 @@
  </header>
  <form class="edit-form" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST"> 
   <div>
-  Nickname :
+  <fmt:message key="my_profile.nickname"/> :
   <input type="text" name="userNickname" value="${user.nickname}" required placeholder="*"><br>
   </div>
   <div>
-  Email :
+  <fmt:message key="my_profile.email"/> :
   <input type="text" name="userEmail" value="${user.email}" required placeholder="*"><br>
   </div>
   <div>
@@ -34,14 +37,14 @@
   <input type="text" name="userSkype" value="${user.skype}"><br>
   </div>
   <div>
-  Phone number :
+  <fmt:message key="my_profile.phone_number"/> :
   <input type="text" name="userNumber" value="${user.phoneNumber}"><br>
   </div>
   <div class="error">
   ${errorMessage}
   </div>
-  <input class="button" type="submit" value="Save">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="save"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   <input type="hidden" value="save-profile" name="command">
   </form>
   <footer class="footer"> 

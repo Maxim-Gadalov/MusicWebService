@@ -1,5 +1,10 @@
 package edu.gadalov.webservice.entity;
 
+/**Entity class for interaction with database information and business logic.
+ * User object.
+ * @author Maxim Gadalov
+ *
+ */
 public class User {
 	private int id;
 	private Role role;
@@ -9,6 +14,16 @@ public class User {
 	private Discount bonus;
 	private String skype;
 	private String phoneNumber;
+	/**Create user object with following parameters
+	 * @param id - id of object similar PRIMARY KEY (int)
+	 * @param role - user role (String)
+	 * @param nickname - user nickname (String)
+	 * @param email - user email (String)
+	 * @param password - encrypting password 
+	 * @param bonus - discount @see {@link Discount#Discount(int, int)}
+	 * @param skype - skype (String)
+	 * @param phoneNumber - phone number (String)
+	 */
 	public User(int id, Role role, String nickname, String email, String password, Discount bonus,
 			String skype, String phoneNumber) {	
 		this.id = id;

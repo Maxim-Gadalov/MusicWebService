@@ -28,8 +28,9 @@ public class CustomPaginationTag extends TagSupport{
 				String title = lowerLimit+"-"+upperLimit;
 				tagBody += "<li><a href=# onclick=document.getElementById('"+title+"').submit();return&nbsp;false;"
 						+ " title="+title+">"+title+"</a></li>";
-				tagBody +=  "<form style=display:none; action=/MusicWebService/MusicServiceServlet method=POST id="+title+">"
+				tagBody +=  "<form style=display:none; action=/MusicWebService/MusicServiceServlet method=GET id="+title+">"
 						+ "<input type=hidden name=command value=pagination>"
+						+ "<input type=hidden name=genre value="+pageContext.getRequest().getParameter("genre")+">"
 						+ "<input type=hidden name=lowerLimit value="+lowerLimit+">"
 						+ "<input type=hidden name=upperLimit value="+upperLimit+">"
 						+ "</form>";
@@ -40,8 +41,9 @@ public class CustomPaginationTag extends TagSupport{
 			    String title = lowerLimit+"-"+upperLimit;
 			    tagBody += "<li><a href=# onclick=document.getElementById('"+title+"').submit();return&nbsp;false;"
 					    + " title=#"+title+">"+title+"</a></li>";
-			    tagBody +=  "<form style=display:none; action=/MusicWebService/MusicServiceServlet method=POST id="+title+">"
+			    tagBody +=  "<form style=display:none; action=/MusicWebService/MusicServiceServlet method=GET id="+title+">"
 					    + "<input type=hidden name=command value=pagination>"
+					    + "<input type=hidden name=genre value="+pageContext.getRequest().getParameter("genre")+">"
 					    + "<input type=hidden name=lowerLimit value="+lowerLimit+">"
 					    + "<input type=hidden name=upperLimit value="+upperLimit+">"
 					    + "</form>"

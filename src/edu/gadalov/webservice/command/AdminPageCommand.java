@@ -12,11 +12,16 @@ import edu.gadalov.webservice.service.AdminMenuService;
 public class AdminPageCommand extends AbstractCommand{
 	private static final String ADMIN_PAGE = "jsp/admin-menu.jsp";
 	private static final String MAIN_PAGE = "main.jsp";
-	// add banlist and track list
+	private static final String DB_ERROR = "Database connection was interrupted";
+	private static final String USER_ROLE = "user";
 
 	@Override
 	public String execute(HttpServletRequest request) {
 		if(request.getSession().getAttribute("user") == null){
+			return MAIN_PAGE;
+		}
+		User user = (User)request.getSession().getAttribute("user");
+		if(USER_ROLE.equals(user.getRole().getRoleName())){
 			return MAIN_PAGE;
 		}
 		AdminMenuService adminMenu = new AdminMenuService();
@@ -31,6 +36,9 @@ public class AdminPageCommand extends AbstractCommand{
 		}
 		if(!discountList.isEmpty()){
 			request.setAttribute("list_discounts", discountList);
+		}
+		if(trackList.isEmpty() || userList.isEmpty() || discountList.isEmpty()){
+			request.setAttribute("databaseError", DB_ERROR);
 		}
 		return ADMIN_PAGE;
 	}

@@ -14,15 +14,21 @@ import edu.gadalov.webservice.connection.ConnectionPool;
 import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.entity.Comment;
 
+/**Comment DAO class @see {@link Comment#Comment(int, edu.gadalov.webservice.entity.User, AudioTrack, String, java.sql.Timestamp)}
+ * @author Maxim Gadalov
+ *
+ */
 public class CommentDAO extends AbstractDAO<Integer, Comment>{
 	private static final Logger LOG = LogManager.getLogger(CommentDAO.class);
 	private static final String SELECT_COMMENT_BY_TRACK = "SELECT * FROM `mydb`.`comments` WHERE `id_audio_track` = ?";
-	//private static final String SELECT_COMMENT_BY_USER = "SELECT * FROM `mydb`.`comments` WHERE `id_user` = ?";
 	private static final String UPDATE_COMMENT = "UPDATE `mydb`.`comments` SET `comment_text` = ? WHERE id_comments = ?";
 	private static final String ADD_COMMENT = "INSERT INTO `mydb`.`comments` (`id_user`,`comment_text`,`date`,`id_audio_track`) VALUES (?,?,NOW(),?)";
 	private static final String DELETE_COMMENT = "DELETE * FROM `mydb`.`comments` WHERE `id_comments` = ?";
 	private static final String SELECT_COMMENT_BY_ID = "SELECT * FROM `mydb`.`comments` WHERE `id_comments` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
+	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
+	 * @return connection
+	 */
 	public Connection getConnection(){
 		return cn;
 	} 
@@ -102,6 +108,10 @@ public class CommentDAO extends AbstractDAO<Integer, Comment>{
 	public boolean deleteById(Integer id) {
 		throw new UnsupportedOperationException();
 	}
+	/**update database table.
+	 * @param entity - comment @see {@link Comment#Comment(int, edu.gadalov.webservice.entity.User, AudioTrack, String, java.sql.Timestamp)}
+	 * @return true if update was successfully , else - otherwise
+	 */
 	public boolean updateComment(Comment entity){
 		boolean result = false;
 		PreparedStatement st = null;
@@ -119,6 +129,10 @@ public class CommentDAO extends AbstractDAO<Integer, Comment>{
 		}
 		return result;
 	}
+	/**Return list of comments found by audio track
+	 * @param track - audio track @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
+	 * @return list of comments @see {@link Comment#Comment(int, edu.gadalov.webservice.entity.User, AudioTrack, String, java.sql.Timestamp)}
+	 */
 	public List<Comment> findByTrack(AudioTrack track){
 		PreparedStatement st = null;
 		List<Comment> list = new ArrayList<>();

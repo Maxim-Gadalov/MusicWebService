@@ -11,6 +11,7 @@ public class EditTrackCommand extends AdminPageCommand{
 	private static final String EDIT_TRACK_PAGE = "jsp/edit-track.jsp";
 	private static final String DB_ERROR_UPDATE = "Can not update this track(DB error)";
 	private static final String DB_ERROR_SELECT = "Can not select this track(DB error)";
+	private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=admin-page";
 
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -40,6 +41,9 @@ public class EditTrackCommand extends AdminPageCommand{
 			if(!service.updateTrack(track)){
 				errorMessage = DB_ERROR_UPDATE;
 				request.setAttribute("editErrorMessage", errorMessage);
+			} else{
+				request.setAttribute("success", true);
+				return SUCCESS_URL_PATH;
 			}
 
 			return super.execute(request);

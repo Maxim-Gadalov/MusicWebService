@@ -38,7 +38,8 @@ public class LoginCommand extends AbstractCommand{
 				}
 				request.getSession().setAttribute("user", user);
 			} else{
-				request.setAttribute("errorMessage", DATABASE_ERROR);
+				errorMessage = DATABASE_ERROR;
+				request.setAttribute("errorMessage", errorMessage);
 			}
 		} else{
 			request.setAttribute("errorMessage", errorMessage);

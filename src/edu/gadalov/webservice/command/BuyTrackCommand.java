@@ -15,6 +15,7 @@ public class BuyTrackCommand extends AbstractCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String BUY_TRACK_PAGE = "jsp/pay.jsp";
 	private static final String ERROR_MESSAGE_ORDER_TRACK = "Can not order track";
+	private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=tracks-page";
 
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -36,16 +37,17 @@ public class BuyTrackCommand extends AbstractCommand{
 		errorMessage = validation.creditCardValidation(cardNumber, cvc, expiryDate, firstName, lastName);
 		User user = (User)request.getSession().getAttribute("user");
 		AudioTrack track = service.getTrackById(Integer.valueOf(idTrack));
-		float trackCost = buyService.getDiscountCost(user, track);
+		String trackCost = String.format(java.util.Locale.US,"%.2f",buyService.getDiscountCost(user, track));
 	    if(errorMessage.isEmpty()){
-	    	if(service.orderTrack(new TrackOrder(user,track))){
-	    		page = MAIN_PAGE;	
+	    	if(service.orderTrack(new TrackOrder(user,track))){	
 	    		if(user.getBonus().getBonus() != 0){
 	    			userService.setDiscount(new Discount(1,0), user);
 	    			user.setBonus(new Discount(1,0));
 	    			request.getSession().removeAttribute("user");
 	    			request.getSession().setAttribute("user", user);
 	    		}
+	    		request.setAttribute("success", true);
+	    		return SUCCESS_URL_PATH;
 	    	} else{
 	    		errorMessage = ERROR_MESSAGE_ORDER_TRACK;
 	    		request.setAttribute("errorMessage", errorMessage);

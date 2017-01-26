@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ctg" uri="customtags" %> 
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,24 +25,24 @@
   </header>
   <section>
   <form class="change-password-form" id="change-password" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
-  <h2>Change password</h2>
+  <h2><fmt:message key="change_password"/></h2>
   <label for="password">
-  Password:<br>
+  <fmt:message key="my_profile.pass"/>:<br>
   <input type="password" name="psw" id="password" maxlength="30" required>
   <ul class="checker">
-    <li>At least 8 characters long (and less than 30 characters)</li>
-	<li>Contains at least 1 number</li>
-	<li>Contains at least 1 lowercase letter</li>
-	<li>Contains at least 1 uppercase letter</li>
+    <li><fmt:message key="registration.psw_long"/></li>
+	<li><fmt:message key="registration.psw_number"/></li>
+	<li><fmt:message key="registration.psw_lcase"/></li>
+	<li><fmt:message key="registration.psw_ucase"/></li>
   </ul>
   </label>
-  Confirm password:<br>
+  <fmt:message key="my_profile.cpsw"/>:<br>
   <input type="password" name="cpsw" id="confirm_password" maxlength="30"  required><br>
   <div style="color:red; padding-top:15px; text-aling:center;">
    ${errorMessage}
   </div>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   <input value="change-password" type="hidden" name="command">
   </form>
   </section>

@@ -1,5 +1,6 @@
 package edu.gadalov.webservice.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,10 @@ import org.apache.logging.log4j.Logger;
 import edu.gadalov.webservice.connection.ConnectionPool;
 import edu.gadalov.webservice.entity.BanList;
 
+/**BanList DAO class @see {@link BanList#BanList(int, edu.gadalov.webservice.entity.User, String, int)}
+ * @author Maxim Gadalov
+ *
+ */
 public class BanListDAO extends AbstractDAO<Integer, BanList>{
 	private static final Logger LOG = LogManager.getLogger(BanListDAO.class);
 	private static final String SELECT_ALL = "SELECT * FROM `mydb`.`banlist`";
@@ -21,6 +26,9 @@ public class BanListDAO extends AbstractDAO<Integer, BanList>{
 	private static final String REMOVE_BAN = "DELETE FROM `mydb`.`banlist` WHERE `id_user` = ?";
 	private static final String SELECT_BAN_BY_USER = "SELECT * FROM `mydb`.`banlist` WHERE `id_user` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
+	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
+	 * @return connection
+	 */
 	public Connection getConnection(){
 		return cn;
 	}

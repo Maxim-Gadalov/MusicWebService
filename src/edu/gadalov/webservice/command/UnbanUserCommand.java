@@ -10,6 +10,7 @@ public class UnbanUserCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
     private static final String NO_SUCH_USER_MESSAGE = "User not found";
     private static final String UNBAN_ERROR_MESSAGE = "This user was not banned";
+    private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=admin-page";
 	
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -27,7 +28,10 @@ public class UnbanUserCommand extends AdminPageCommand{
 			errorMessage = UNBAN_ERROR_MESSAGE;
 		}
 		if(errorMessage.isEmpty()){
-			service.removeBan(user.getId());
+			if(service.removeBan(user.getId())){
+				request.setAttribute("success", true);
+				return SUCCESS_URL_PATH;
+			}
 		} else{
 			request.setAttribute("unbanErrorMessage", errorMessage);
 		}

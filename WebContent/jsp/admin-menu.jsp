@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
-<%@ taglib prefix="ctg" uri="customtags" %>    
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,29 +23,26 @@
 <header>
 <ctg:header-custom user="${user}"/> 
 </header>
-<h1>Welcome to the administration menu</h1>
+<h1><fmt:message key="admin_welcome"/></h1>
+<h2>${databaseError}</h2>
 <section>
 <div style="color:red;">
-Good whatever time of day applies, ${user.nickname}. 
-You are in the menu of web service administration. 
-We remind you that you should not exercise the authority given to you by project managers for personal advantage. 
-All decisions must be clear and consistent. 
-Thank you for being with us. 
+<fmt:message key="admin_message"/>
 </div>
   <form class="admin-form" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST" enctype="multipart/form-data">
   <div style="color:red; text-align:center;">
   ${addTrackError}
   </div>
-  <button class="show-add-form" onclick="showAddTrackForm('add-track')">Add track</button>
+  <button class="show-add-form" onclick="showAddTrackForm('add-track')"><fmt:message key="track_list.add"/></button>
   <div id="add-track" style="display:none;">
-  Singer :<br>
-  <input type="text" name="singer" required placeholder="*"><br>
-  Track name :<br>
-  <input type="text" name="track-name" required placeholder="*"><br>
-  Album :<br>
-  <input type="text" name="album"><br>
-  Cost :<br>
-  <input type="text" name="cost" required placeholder="*"><br>
+  <fmt:message key="track_list.singer"/> :<br>
+  <input type="text" name="singer" maxlength="60" required placeholder="*"><br>
+  <fmt:message key="track_list.track_name"/> :<br>
+  <input type="text" name="track-name" maxlength="60" required placeholder="*"><br>
+  <fmt:message key="track_list.album"/> :<br>
+  <input type="text" name="album" maxlength="45"><br>
+  <fmt:message key="track_list.cost"/> :<br>
+  <input type="text" name="cost" maxlength="5" required placeholder="*"><br>
   <select name="genre">
   <option value="Trance" selected>Trance</option>
   <option value="House">House</option>
@@ -51,8 +51,8 @@ Thank you for being with us.
   <option value="Techno">Techno</option>
   </select><br>
   <input name="file-path" type="file" accept="audio/*"><br>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   </div>
   <input type="hidden" name="command" value="addTrack">
   </form>
@@ -60,14 +60,14 @@ Thank you for being with us.
   <div style="color:red;">
   ${removeErrorMessage}
   </div>
-  <button class="show-add-form" onclick="showAddTrackForm('remove-track')">Remove track</button>
+  <button class="show-add-form" onclick="showAddTrackForm('remove-track')"><fmt:message key="track_list.remove"/></button>
   <div id="remove-track" style="display:none;">
-  Singer :<br>
-  <input type="text" name="singer-remove" required placeholder="*"><br>
-  Track name :<br>
-  <input type="text" name="track-name-remove" required placeholder="*"><br>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <fmt:message key="track_list.singer"/> :<br>
+  <input type="text" name="singer-remove" maxlength="60" required placeholder="*"><br>
+  <fmt:message key="track_list.track_name"/> :<br>
+  <input type="text" name="track-name-remove" maxlength="60" required placeholder="*"><br>
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   </div>
   <input type="hidden" name="command" value="remove-track">
   </form>
@@ -75,12 +75,12 @@ Thank you for being with us.
   ${editErrorMessage}
   </div>
   <form action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
-  <button class="show-add-form" onclick="showAddTrackForm('edit-track')">Edit track</button>
+  <button class="show-add-form" onclick="showAddTrackForm('edit-track')"><fmt:message key="track_list.edit"/></button>
   <div id="edit-track" style="display:none;">
-  Id track :<br>
+  <fmt:message key="track_list.id"/> :<br>
   <input type="number" name="idTrack" required placeholder="*"><br>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   </div>
   <input type="hidden" name="command" value="edit-track">
   </form>
@@ -88,13 +88,13 @@ Thank you for being with us.
   <div style="color:red;">
   ${banErrorMessage}
   </div>
-  <button class="show-add-form" onclick="showAddTrackForm('ban-user')">Ban user</button>
+  <button class="show-add-form" onclick="showAddTrackForm('ban-user')"><fmt:message key="user_list.ban"/></button>
   <div id="ban-user" style="display:none;">
-  Nickname or E-mail :<br>
-  <input type="text" name="user-login" required placeholder="*"><br>
-  <textarea name="reason" rows="5" cols="30" required>Reason of ban</textarea><br>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <fmt:message key="my_profile.login"/> :<br>
+  <input type="text" name="user-login" maxlength="60" required placeholder="*"><br>
+  <textarea name="reason" rows="5" cols="30" maxlength="255" required><fmt:message key="user_list.reason"/></textarea><br>
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   </div>
   <input type="hidden" name="command" value="ban-user">
   </form>
@@ -102,12 +102,12 @@ Thank you for being with us.
   <div style="color:red;">
   ${unbanErrorMessage}
   </div>
-  <button class="show-add-form" onclick="showAddTrackForm('unban-user')">Unban user</button>
+  <button class="show-add-form" onclick="showAddTrackForm('unban-user')"><fmt:message key="user_list.unban"/></button>
   <div id="unban-user" style="display:none;">
-  Nickname or E-mail :<br>
-  <input type="text" name="user-login" required placeholder="*"><br>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <fmt:message key="my_profile.login"/> :<br>
+  <input type="text" name="user-login" maxlength="60" required placeholder="*"><br>
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   </div>
   <input type="hidden" name="command" value="unban-user">
   </form>
@@ -116,17 +116,17 @@ Thank you for being with us.
   <div style="color:red;">
   ${discountErrorMessage}
   </div>
-  <button class="show-add-form" onclick="showAddTrackForm('assign-discount')">Assign discount</button>
+  <button class="show-add-form" onclick="showAddTrackForm('assign-discount')"><fmt:message key="user_list.assign_discount"/></button>
   <div id="assign-discount" style="display:none;">
-  Nickname or E-mail :<br>
-  <input type="text" name="user-login" required placeholder="*">
+  <fmt:message key="my_profile.login"/> :<br>
+  <input type="text" name="user-login" maxlength="60" required placeholder="*">
   <select name="discount">
     <c:forEach  var="elem" items="${list_discounts}" varStatus="status">
     <option value="${elem.id}">${elem.bonus}%</option>
     </c:forEach>
   </select><br>
-  <input class="button" type="submit" value="Submit">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="submit"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   </div>
   <input type="hidden" name="command" value="assign-discount">
   </form>
@@ -134,13 +134,13 @@ Thank you for being with us.
 <aside>
 <div class="users-list">
 <table>
-<caption> Users list</caption>
+<caption><fmt:message key="user_list"/></caption>
 <tr>
-<th>Role</th>
-<th>Nickname</th>
-<th>Email</th>
+<th><fmt:message key="user_list.role"/></th>
+<th><fmt:message key="my_profile.nickname"/></th>
+<th><fmt:message key="my_profile.email"/></th>
 <th>Skype</th>
-<th>Phone number</th>
+<th><fmt:message key="my_profile.phone_number"/></th>
 </tr> 
 <c:forEach  var="elem" items="${list_users}" varStatus="status">
   <tr>
@@ -155,15 +155,15 @@ Thank you for being with us.
 </div>
 <div class="track-list">
 <table>
-<caption> Tracks list</caption>
+<caption><fmt:message key="track_list"/></caption>
 <tr>
-<th>Id</th>
-<th>Singer</th>
-<th>Track name</th>
-<th>Cost</th>
-<th>Genre</th>
-<th>Admin</th>
-<th>Visibility</th>
+<th><fmt:message key="track_list.id"/></th>
+<th><fmt:message key="track_list.singer"/></th>
+<th><fmt:message key="track_list.track_name"/></th>
+<th><fmt:message key="track_list.cost"/></th>
+<th><fmt:message key="track_list.genre"/></th>
+<th><fmt:message key="track_list.admin"/></th>
+<th><fmt:message key="track_list.visibility"/></th>
 </tr> 
 <c:forEach  var="elem" items="${list_tracks}" varStatus="status">
   <tr>

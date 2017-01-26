@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="ctg" uri="customtags" %>     
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,20 +25,20 @@
  </header>
  <form class="edit-form" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST"> 
   <div>
-  Singer :
-  <input type="text" name="singer" value="${track.singer}" required placeholder="*"><br>
+  <fmt:message key="track_list.singer"/> :
+  <input type="text" name="singer" value="${track.singer}" maxlength="60" required placeholder="*"><br>
   </div>
   <div>
-  Track name :
-  <input type="text" name="track-name" value="${track.trackName}" required placeholder="*"><br>
+  <fmt:message key="track_list.track_name"/> :
+  <input type="text" name="track-name" value="${track.trackName}" maxlength="60" required placeholder="*"><br>
   </div>
   <div>
-  Album :
-  <input type="text" name="album" value="${track.album}"><br>
+  <fmt:message key="track_list.album"/> :
+  <input type="text" name="album" value="${track.album}" maxlength="45"><br>
   </div>
   <div>
-  Cost :
-  <input type="text" name="cost" value="${track.cost}" required placeholder="*"><br>
+  <fmt:message key="track_list.cost"/> :
+  <input type="text" name="cost" value="${track.cost}" maxlength="5" required placeholder="*"><br>
   </div>
   <select name="genre">
   <option value="Trance" selected>Trance</option>
@@ -47,8 +50,8 @@
   <div class="error">
   ${errorMessage}
   </div>
-  <input class="button" type="submit" value="Save">
-  <input class="button" type="reset" value="Reset">
+  <input class="button" type="submit" value="<fmt:message key="save"/>">
+  <input class="button" type="reset" value="<fmt:message key="reset"/>">
   <input type="hidden" value="${track.id}" name="trackId">
   <input type="hidden" value="save-track" name="command">
   </form>

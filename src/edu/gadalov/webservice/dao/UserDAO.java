@@ -15,6 +15,10 @@ import edu.gadalov.webservice.connection.ConnectionPool;
 import edu.gadalov.webservice.entity.Discount;
 import edu.gadalov.webservice.entity.User;
 
+/**User DAO class, @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
+ * @author Maxim Gadalov
+ *
+ */
 public class UserDAO extends AbstractDAO<Integer,User>{
 	private static final Logger LOG = LogManager.getLogger(UserDAO.class);
 	private final static String ADD_USER = "INSERT INTO `mydb`.`users` (`id_role`,`nickname`,`email`,`password`,`id_bonus`) VALUES (?,?,?,MD5(?),?)";
@@ -27,6 +31,9 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 	private final static String UPDATE_PASSWORD = "UPDATE `mydb`.`users` SET `password` = ? WHERE `id_users` = ?";
 	private final static String UPDATE_DISCOUNT = "UPDATE `mydb`.`users` SET `id_bonus` = ? WHERE `id_users` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
+	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
+	 * @return connection
+	 */
 	public Connection getConnection(){
 		return cn;
 	}
@@ -135,6 +142,10 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 		}
 		return result;
 	}
+	/**Return User found by email
+	 * @param email - email (String)
+	 * @return User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
+	 */
 	public User findByEmail(String email){
 		PreparedStatement st = null;
 		User user = null;
@@ -163,6 +174,10 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 			}
 		return user;
 	}
+	/**Return User found by nickname
+	 * @param nickname - nickname (String)
+	 * @return User @See {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
+	 */
 	public User findByNickname(String nickname){
 		PreparedStatement st = null;
 		User user = null;
@@ -191,6 +206,10 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 			}
 		return user;
 	}
+	/**Update database record
+	 * @param entity - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
+	 * @return true if update successfully , else - otherwise
+	 */
 	public boolean updateUser(User entity){
 		boolean result = false;
 		PreparedStatement st = null;
@@ -211,6 +230,10 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 		}
 		return result;
 	}
+	/**update user password
+	 * @param entity - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
+	 * @return true if update successfully, else - otherwise
+	 */
 	public boolean updateUserPassword(User entity){
 		boolean result = false;
 		PreparedStatement st = null;
@@ -228,6 +251,11 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 		}
 		return result;
 	}
+	/**update user discount
+	 * @param discount - Discount @see {@link Discount#Discount(int, int)}
+	 * @param entity - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
+	 * @return
+	 */
 	public boolean updateUserDiscount(Discount discount, User entity){
 		boolean result = false;
 		PreparedStatement st = null;

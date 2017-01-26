@@ -9,6 +9,9 @@ import edu.gadalov.webservice.service.TrackService;
 
 public class AddCommentCommand extends TracksPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
+	private static final String COMMENT_ERROR = "Comment message can't be empty";
+	private static final String DB_ERROR = "Database connection was interrupted";
+	private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=tracks-page";
 	
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -21,10 +24,20 @@ public class AddCommentCommand extends TracksPageCommand{
 		CommentService service = new CommentService();
 		TrackService trackService = new TrackService();
 		AudioTrack track = trackService.getTrackById(Integer.valueOf(idTrack));
-		if((user != null) && (track != null) && !commentText.isEmpty()){
-		service.addComment(user, track, commentText);
+		String errorMessage = new String();
+		if((track == null)){
+			errorMessage = DB_ERROR;
+		} 
+		if(commentText.trim().isEmpty()){
+			errorMessage = COMMENT_ERROR;
+		}
+		if(errorMessage.isEmpty()){
+			if(service.addComment(user, track, commentText)){
+			request.setAttribute("success", true);
+			return SUCCESS_URL_PATH;
+			}
 		} else{
-			System.out.println("command error, some parameters are empty");
+			request.setAttribute("errorMessage", errorMessage);
 		}
 		return super.execute(request);
 	}

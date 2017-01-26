@@ -32,6 +32,7 @@
 </div>
 <input class="button" type="submit" value="Submit">
 <input class="button" type="reset" value="Reset">
+<a href="/MusicWebService/main.jsp"><input class="button" type="button" value="Back to main"></a>
 </div>
 <input type="hidden" name="idTrack" value="${idTrack}">
 <input type="hidden" name="command" value="transaction">

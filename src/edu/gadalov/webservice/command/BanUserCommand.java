@@ -12,6 +12,7 @@ public class BanUserCommand extends AdminPageCommand{
     private static final String NO_SUCH_USER_MESSAGE = "User not found";
     private static final String BAN_ADMIN_MESSAGE = "You can not ban administrator";
     private static final String DOUBLE_BAN_ERROR_MESSAGE = "This user is already banned";
+    private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=admin-page";
 	
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -33,7 +34,10 @@ public class BanUserCommand extends AdminPageCommand{
 			errorMessage = DOUBLE_BAN_ERROR_MESSAGE;
 		}
 		if(errorMessage.isEmpty()){
-			service.banUser(new BanList(1,user,reason,admin.getId()));
+			if(service.banUser(new BanList(1,user,reason,admin.getId()))){
+				request.setAttribute("success", true);
+				return SUCCESS_URL_PATH;
+			}
 		} else{
 			request.setAttribute("banErrorMessage", errorMessage);
 		}

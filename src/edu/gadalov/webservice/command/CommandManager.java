@@ -48,6 +48,8 @@ public class CommandManager {
 			return new EditTrackPageCommand();
 		case "save-track":
 			return new EditTrackCommand();
+		case "locale":
+			return new LanguageCommand();
 		default:
 				return new DefaultCommand();
 		}	

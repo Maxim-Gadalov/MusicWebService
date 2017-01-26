@@ -11,6 +11,7 @@ public class AssignDiscountCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String USER_ERROR = "User not found";
 	private static final String DATABASE_ERROR = "Database connection was interrupted";
+	private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=admin-page";
 	
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -31,7 +32,10 @@ public class AssignDiscountCommand extends AdminPageCommand{
 			errorMessage = DATABASE_ERROR;
 		}
 		if(errorMessage.isEmpty()){
-			service.setDiscount(bonus, user);
+			if(service.setDiscount(bonus, user)){
+				request.setAttribute("success", true);
+				return SUCCESS_URL_PATH;
+			}
 		} else{
 			request.setAttribute("discountErrorMessage", errorMessage);
 		}

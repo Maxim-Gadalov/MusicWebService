@@ -8,6 +8,7 @@ import edu.gadalov.webservice.service.CommentService;
 public class EditCommentCommand extends TracksPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String EDIT_COMMENT_ERROR_MESSAGE = "Can not update comment";
+	private static final String SUCCESS_URL_PATH = "/MusicWebService/MusicServiceServlet?command=tracks-page";
 	
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -22,6 +23,9 @@ public class EditCommentCommand extends TracksPageCommand{
 		if(!service.editComment(Integer.valueOf(id), updateText, user)){
 			errorMessage = EDIT_COMMENT_ERROR_MESSAGE;
 			request.setAttribute("errorMessage", errorMessage);
+		} else{
+			request.setAttribute("success", true);
+			return SUCCESS_URL_PATH;
 		}
 		return super.execute(request);
 	}

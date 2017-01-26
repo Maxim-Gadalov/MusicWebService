@@ -14,6 +14,10 @@ import org.apache.logging.log4j.Logger;
 import edu.gadalov.webservice.connection.ConnectionPool;
 import edu.gadalov.webservice.entity.AudioTrack;
 
+/**Audio track DAO class @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
+ * @author Maxim Gadalov
+ *
+ */
 public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	private static final Logger LOG = LogManager.getLogger(AudioTrackDAO.class);
 	private static final String ADD_TRACK ="INSERT INTO `mydb`.`audio_tracks` (`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`albom`,`genre`) VALUES (?,?,?,?,?,?,?)";
@@ -24,6 +28,9 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	private static final String SELECT_VISIBLE_TRACKS = "SELECT * FROM `mydb`.`audio_tracks` WHERE `visibility` = 1";
 	private static final String UPDATE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `singer` = ?, `track_name` = ?, `cost` = ?, `albom` = ?, `genre` = ? WHERE `id_audio_track` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
+	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
+	 * @return connection
+	 */
 	public Connection getConnection(){
 		return cn;
 	}
@@ -129,6 +136,10 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	public boolean deleteById(Integer id) {
 		throw new UnsupportedOperationException();
 	}
+	/**Returns list of objects found by audio track genre
+	 * @param genre - @see {@link AudioTrack#getGenre()}
+	 * @return list of AudioTrack objects @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
+	 */
 	public List<AudioTrack> findByGenre(String genre){
 		List<AudioTrack> tracks = new ArrayList<>();
 		PreparedStatement st = null;
@@ -162,6 +173,9 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 		 }
 		return tracks;	
 	}
+	/**Returns non-removal marked AudioTracks @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
+	 * @return list of AduioTrack 
+	 */
 	public List<AudioTrack> findVisibleTracks() {
 		 List<AudioTrack> tracks = new ArrayList<>();
 		 Statement st = null;
@@ -194,6 +208,10 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 		 }
 		return tracks;
 	}
+	/**Update database table.
+	 * @param entity - AudioTrack @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
+	 * @return true if object update successfully , false - otherwise
+	 */
 	public boolean updateTrack(AudioTrack entity){
 		boolean result = false;
 		PreparedStatement st = null;
@@ -216,6 +234,11 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 		return result;
 	
 	}
+	/**Mark audio track as invisible.(visibility = false) 
+	 * @param singer - name of performer @see {@link AudioTrack#getSinger()}
+	 * @param trackName - audio track name @see {@link AudioTrack#getTrackName()}
+	 * @return
+	 */
 	public boolean deleteTrack(String singer, String trackName){
 		boolean result = false;
 		PreparedStatement st = null;

@@ -3,6 +3,9 @@
 <%@ page errorPage="/errors/database_error.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="ctg" uri="customtags" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.content"/> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,16 +26,16 @@
   </header>
   <section>
     <form class="login-form" action=<c:url value="/MusicServiceServlet" context="/MusicWebService"/> method="POST">
-	<h2>Log in</h2>
-	Enter email or nickname:<br>
-	<input class="textfield" type="text" name="nick-or-mail" required><br>
-	Enter password:<br>
-	<input class="textfield" type="password"name="password" required>
+	<h2><fmt:message key="log_in"/></h2>
+	<fmt:message key="my_profile.login"/>:<br>
+	<input class="textfield" type="text" name="nick-or-mail" maxlength="60" required><br>
+	<fmt:message key="my_profile.pass"/>:<br>
+	<input class="textfield" type="password"name="password" maxlength="30" required>
 	<div class="message">
 	${errorMessage}
 	</div>
-	<input class="button" type="submit" value="Submit">
-    <input class="button" type="reset" value="Reset">
+	<input class="button" type="submit" value="<fmt:message key="submit"/>">
+    <input class="button" type="reset" value="<fmt:message key="reset"/>">
     <input value="login" type="hidden" name="command">
 	</form>
   </section>
