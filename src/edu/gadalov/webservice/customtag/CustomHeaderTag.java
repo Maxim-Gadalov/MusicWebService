@@ -25,8 +25,8 @@ public class CustomHeaderTag extends TagSupport{
 	private static final String LOGIN_PAGE_PATH = "/MusicWebService/jsp/login.jsp";
 	private static final String SIGN_UP_PAGE_PATH = "/MusicWebService/jsp/registration.jsp";
 	private static final String HOME_PAGE_PATH = "/MusicWebService/main.jsp";
-	private static final String ABOUT_US_PATH = "/MusicWebService/jsp/about_us.jsp";
-	private static final String CONTACT_PATH = "/MusicWebService/jsp/contact.jsp";
+	private static final String ABOUT_US_PATH = "/MusicWebService/about_us.jsp";
+	private static final String CONTACT_PATH = "/MusicWebService/contact.jsp";
 	private static final String SPLITTER = "_";
 	private static final int LOCALE_LANGUAGE_INDEX = 0;
 	private static final int LOCALE_COUNTRY_INDEX = 1;
