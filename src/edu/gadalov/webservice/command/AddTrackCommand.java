@@ -13,6 +13,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.AdminMenuService;
 import edu.gadalov.webservice.validation.TrackValidation;
 
+/** Add AudioTrack command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class AddTrackCommand extends AdminPageCommand{
 	private static final Logger LOG = LogManager.getLogger(AddTrackCommand.class);
 	private static final String MAIN_PAGE = "main.jsp";

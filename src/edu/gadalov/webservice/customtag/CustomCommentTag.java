@@ -16,6 +16,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.localebundle.LocaleBundle;
 import edu.gadalov.webservice.service.CommentService;
 
+/**Custom comment jstl tag. Show users comments, let authorized users make new comments and let admins edit all comments.
+ * @author Maxim Gadalov
+ *
+ */
 public class CustomCommentTag extends TagSupport{
 	private static final long serialVersionUID = -5086917123425357906L;
 	private static final Logger LOG = LogManager.getLogger(CustomCommentTag.class);
@@ -49,7 +53,6 @@ public class CustomCommentTag extends TagSupport{
 			bundle = new LocaleBundle();
 		}
 		if(user == null){
-			//guest view 
 			if(!list.isEmpty()){
 				tagBody = "<div class=comments>";
 				for(int i = 0;i < list.size();i++){
@@ -68,7 +71,6 @@ public class CustomCommentTag extends TagSupport{
 				tagBody	+= "</div>";
 			}
 			} else if(USER_ROLE_NAME.equals(user.getRole().getRoleName())){
-				// user
 				if(!list.isEmpty()){
 					tagBody = "<div class=comments>";
 					for(int i = 0;i < list.size();i++){
@@ -89,7 +91,6 @@ public class CustomCommentTag extends TagSupport{
 				tagBody +=  "<textarea class=area form=comment"+track.getId()+" name=comment_text required rows=3></textarea><br>"
 						+ "<button onclick=document.getElementById('comment"+track.getId()+"').submit();return&nbsp;false;>"+bundle.getValue("submit")+"</button>";
 		} else{
-			//admin
 			if(!list.isEmpty()){
 				tagBody = "<div class=comments>";
 				for(int i = 0;i < list.size();i++){

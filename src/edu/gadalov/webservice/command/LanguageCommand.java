@@ -2,6 +2,10 @@ package edu.gadalov.webservice.command;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**Change language command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class LanguageCommand extends AbstractCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String RUSSIAN_LANGUAGE = "Russian";

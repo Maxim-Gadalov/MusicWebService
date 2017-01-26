@@ -4,11 +4,21 @@ import edu.gadalov.webservice.dao.UserDAO;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.validation.UserValidation;
 
+/**Edit user profile service class.
+ * @author Maxim Gadalov
+ *
+ */
 public class EditProfileService {
 	private static final String ERROR_MESSAGE_UNIQUENESS_EMAIL = "This email is already exists";
 	private static final String ERROR_MESSAGE_UNIQUENESS_NICKNAME = "This nickname is already exists";
 	private static final String ERROR_MESSAGE_EMAIL_VALIDITY = "This email is invalid";
 	private static final String ERROR_MESSAGE_NICKNAME_VALIDITY = "This nickname is invalid";
+	/**Check new user profile info
+	 * @param nickname - new String nickname
+	 * @param email - new String email
+	 * @param user - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, edu.gadalov.webservice.entity.Discount, String, String)}
+	 * @return empty String if new info correct and valid, else return String errorMessage
+	 */
 	public String checkProfile(String nickname,String email,User user){
 		UserValidation validation = new UserValidation();
 		String errorMessage = new String();
@@ -24,6 +34,10 @@ public class EditProfileService {
 		}
 		return errorMessage;
 	}
+	/**Update user profile
+	 * @param user - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, edu.gadalov.webservice.entity.Discount, String, String)}
+	 * @return true if update was successful , false - otherwise
+	 */
 	public boolean editUserProfile(User user){
 		UserDAO userDAO = new UserDAO();
 		boolean result = false;

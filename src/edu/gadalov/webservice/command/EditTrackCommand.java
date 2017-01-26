@@ -6,6 +6,10 @@ import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.service.TrackService;
 import edu.gadalov.webservice.validation.TrackValidation;
 
+/**Edit AudioTrack command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class EditTrackCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String EDIT_TRACK_PAGE = "jsp/edit-track.jsp";

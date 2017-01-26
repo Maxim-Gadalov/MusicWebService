@@ -28,7 +28,7 @@ public class BanList {
 		return user;
 	}
 	/**set new user object
-	 * @param user @see {@link User#User(int, Role, String, String, String, Discount, String, String)}
+	 * @param user - User @see {@link User#User(int, Role, String, String, String, Discount, String, String)}
 	 */
 	public void setUser(User user) {
 		this.user = user;

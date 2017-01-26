@@ -14,6 +14,10 @@ import edu.gadalov.webservice.command.CommandManager;
 import edu.gadalov.webservice.connection.ConnectionPool;
 
 
+/**Controller.
+ * @author Maxim Gadalov
+ *
+ */
 @WebServlet("/MusicServiceServlet")
 @MultipartConfig(fileSizeThreshold=1024*1024*2, 
 maxFileSize=1024*1024*20,      
@@ -27,25 +31,31 @@ public class MusicServiceServlet extends HttpServlet {
 		ConnectionPool.getInstance();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//add-comment
-		String command = request.getParameter("command");
-		CommandManager manager = new CommandManager();
-		String forwardPage = manager.getCommand(command).execute(request);
-		request.getRequestDispatcher(forwardPage).forward(request, response);
+		String url = processExecute(request,response);
+		request.getRequestDispatcher(url).forward(request, response);
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String command = request.getParameter("command");
-		CommandManager manager = new CommandManager();
-		String forwardPage = manager.getCommand(command).execute(request);
+		String url = processExecute(request,response);
 		if(request.getAttribute("success") == null){
-			request.getRequestDispatcher(forwardPage).forward(request, response);
+			request.getRequestDispatcher(url).forward(request, response);
 		} else{
-			response.sendRedirect(forwardPage);
+			response.sendRedirect(url);
 		}
 	}
 	public void destroy() {
 			ConnectionPool.getInstance().destroyPool();
+	}
+	/**Return url 
+	 * @param request - HttpServletRequest
+	 * @param response - HttpServletResponse
+	 * @return String url 
+	 */
+	public String processExecute(HttpServletRequest request, HttpServletResponse response){
+		String command = request.getParameter("command");
+		CommandManager manager = new CommandManager();
+		String url = manager.getCommand(command).execute(request);
+		return url;
 	}
 
 }

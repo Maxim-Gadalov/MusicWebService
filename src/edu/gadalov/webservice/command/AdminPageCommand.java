@@ -9,6 +9,10 @@ import edu.gadalov.webservice.entity.Discount;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.AdminMenuService;
 
+/**Admin page forward command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class AdminPageCommand extends AbstractCommand{
 	private static final String ADMIN_PAGE = "jsp/admin-menu.jsp";
 	private static final String MAIN_PAGE = "main.jsp";

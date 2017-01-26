@@ -5,6 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.service.TrackService;
 
+/**Edit AudioTrack page forward command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class EditTrackPageCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String EDIT_TRACK_PAGE = "jsp/edit-track.jsp";

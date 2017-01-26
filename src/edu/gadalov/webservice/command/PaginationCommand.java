@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.service.TrackService;
 
+/**AudioTrack pagitation command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class PaginationCommand extends AbstractCommand{
 	private static final String TRACKS_PAGE = "jsp/tracks.jsp";
 	private static final String DATABASE_ERROR = "Database connection interrupted";

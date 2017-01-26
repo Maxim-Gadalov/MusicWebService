@@ -11,6 +11,10 @@ import edu.gadalov.webservice.service.TrackService;
 import edu.gadalov.webservice.service.UserService;
 import edu.gadalov.webservice.validation.CreditCardValidation;
 
+/**Buy AudioTrack command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class BuyTrackCommand extends AbstractCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String BUY_TRACK_PAGE = "jsp/pay.jsp";

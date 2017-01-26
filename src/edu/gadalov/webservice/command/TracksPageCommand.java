@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.service.TrackService;
 
+/**AudioTracks page forward command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class TracksPageCommand extends AbstractCommand{
 	private static final String TRACKS_PAGE = "jsp/tracks.jsp";
 	private static final int MAX_TRACKS_ON_PAGE = 10;

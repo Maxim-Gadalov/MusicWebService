@@ -254,7 +254,7 @@ public class UserDAO extends AbstractDAO<Integer,User>{
 	/**update user discount
 	 * @param discount - Discount @see {@link Discount#Discount(int, int)}
 	 * @param entity - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
-	 * @return
+	 * @return true if update was successful, false - otherwise
 	 */
 	public boolean updateUserDiscount(Discount discount, User entity){
 		boolean result = false;

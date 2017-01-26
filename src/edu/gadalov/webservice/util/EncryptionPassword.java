@@ -7,9 +7,17 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**Encryption password class.
+ * @author Maxim Gadalov
+ *
+ */
 public class EncryptionPassword {
 	private static final Logger LOG = LogManager.getLogger(EncryptionPassword.class);
 	private static final String ENCRYPTION_ALGORITHM = "MD5";
+	/**Return encrypted value. MD5 algorithm.
+	 * @param st - String password
+	 * @return encrypted String
+	 */
 	public static String encrypt(String st) {
 	    MessageDigest messageDigest = null;
 	    byte[] digest = new byte[0]; 

@@ -8,12 +8,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+/**Language resource bundle class.
+ * @author Maxim Gadalov
+ *
+ */
 public class LocaleBundle {
 	private static final Logger LOG = LogManager.getLogger(LocaleBundle.class);
 	private static final String BASE_BUNDLE = "property.content";
 	
 	private ResourceBundle  bundle;
 	
+	/**Create resource bundle object with Locale.
+	 * @param locale - Locale @see {@link Locale#Locale(String, String)}
+	 */
 	public LocaleBundle(Locale locale){
 		try{
 			bundle = ResourceBundle.getBundle(BASE_BUNDLE, locale);
@@ -22,6 +29,9 @@ public class LocaleBundle {
 			throw new RuntimeException("Locale bundle not found");
 		}		
 	}
+	/**
+	 * Create default resource bundle
+	 */
 	public LocaleBundle(){
 		try{
 			bundle = ResourceBundle.getBundle(BASE_BUNDLE);
@@ -30,9 +40,11 @@ public class LocaleBundle {
 			throw new RuntimeException("Locale bundle not found");
 		}		
 	}
+	/**Return located value.
+	 * @param key - String key
+	 * @return - String located value
+	 */
 	public String getValue(String key){
-		//String value = new String();
-		//value = bundle.getString(key);
 		return bundle.getString(key);
 	}
 

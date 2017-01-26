@@ -14,6 +14,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
+/**Custom thread safety connection pool.
+ * @author Maxim Gadalov
+ *
+ */
 public class ConnectionPool {
 	private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
 	private static String dbUrl; 
@@ -25,6 +29,9 @@ public class ConnectionPool {
 	private static ConnectionPool pool;
 	private static ResourceBundle resource;
 	private  BlockingQueue<Connection> connectionPool = new ArrayBlockingQueue<>(MAX_CONNECTIONS);
+	/**
+	 * Register JDBC driver and initialize resources.
+	 */
 	private ConnectionPool(){
 		try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -34,6 +41,9 @@ public class ConnectionPool {
 		}
 		initResource();
 	}
+	/**Thread safety initialize object method.
+	 * @return ConnectionPool object
+	 */
 	public static ConnectionPool getInstance(){
 		if (!checker.get()){
 		try{
@@ -52,6 +62,9 @@ public class ConnectionPool {
 		return pool;	
 	}
 	
+	/**Create connection
+	 * @return connection
+	 */
 	private  Connection createConnection(){
 		Connection conn = null;
 		try {
@@ -61,6 +74,9 @@ public class ConnectionPool {
 		}
 		return conn;
 	}
+	/**
+	 * Create all adjusted connection.
+	 */
 	private void createAllConnections(){
 		for(int i = 0;i < MAX_CONNECTIONS;i++){
 			Connection cn = createConnection();
@@ -69,6 +85,9 @@ public class ConnectionPool {
 			}
 		}
 	}
+	/**Take connection from connection pool.
+	 * @return connection
+	 */
 	public Connection getConnectionFromPool(){
 		Connection cn = null;
 		try {
@@ -78,6 +97,9 @@ public class ConnectionPool {
 		}
 		return cn;
 	}
+	/**Put connection back to the pool
+	 * @param conn - connection
+	 */
 	public void putConnectionBack(Connection conn){
 		try {
 			connectionPool.put(conn);
@@ -85,6 +107,9 @@ public class ConnectionPool {
 			LOG.error(e);
 		}	
 	}
+	/**
+	 * Destroy ConnectionPool
+	 */
 	public void destroyPool(){
 		for(int i = 0;i < connectionPool.size();i++){
 			try {
@@ -94,6 +119,9 @@ public class ConnectionPool {
 			}		
 		}
 	}
+	/**
+	 * Initialize property resources 
+	 */
 	private void initResource(){
 		try{
 		resource = ResourceBundle.getBundle("property.database");
@@ -105,6 +133,9 @@ public class ConnectionPool {
 			throw new RuntimeException("Database resource not found");
 		}
 	}
+	/**
+	 * Check created connections from ConnectionPool after initialize.
+	 */
 	private void checkConnection(){
 		if(connectionPool.isEmpty()){
 			throw new RuntimeException("Server can not connected to the database..."); 

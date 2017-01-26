@@ -8,6 +8,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.BuyTrackService;
 import edu.gadalov.webservice.service.TrackService;
 
+/**Buy AudioTrack page forward command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class BuyTrackPageCommand extends TracksPageCommand{
 	private static final String BUY_TRACK_PAGE = "jsp/pay.jsp";
 	private static final String LOGIN_PAGE = "jsp/login.jsp";

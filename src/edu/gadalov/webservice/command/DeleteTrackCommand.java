@@ -4,6 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import edu.gadalov.webservice.service.TrackService;
 
+/**Delete AudioTrack command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class DeleteTrackCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String REMOVE_TRACK_ERROR_MESSAGE = "Track not found";

@@ -11,6 +11,10 @@ import org.apache.logging.log4j.Logger;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.localebundle.LocaleBundle;
 
+/**Custom Header jstl tag. Show header view.
+ * @author Maxim Gadalov
+ *
+ */
 public class CustomHeaderTag extends TagSupport{
 	private static final Logger LOG = LogManager.getLogger(CustomHeaderTag.class);
 	private static final long serialVersionUID = 2984735954509651502L;

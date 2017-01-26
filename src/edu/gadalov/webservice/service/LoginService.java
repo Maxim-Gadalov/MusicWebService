@@ -5,10 +5,19 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.util.EncryptionPassword;
 import edu.gadalov.webservice.validation.UserValidation;
 
+/**Log in service class.
+ * @author Maxim Gadalov
+ *
+ */
 public class LoginService {
 	private static final String WRONG_EMAIL_MESSAGE = "Incorrect email! Try again,please";
 	private static final String WRONG_NICKNAME_MESSAGE = "Incorrect nickname! Try again,please";
 	private static final String WRONG_PASSWORD_MESSAGE = "Incorrect login or password! Try again,please";
+	/**Check correctness login and password
+	 * @param login - String user login(email or nickname)
+	 * @param password - String password
+	 * @return empty String if login and password are right, else return String errorMessage
+	 */
 	public String loginCheck(String login,String password){
 		String errorMessage = new String();
 		UserValidation validation = new UserValidation();

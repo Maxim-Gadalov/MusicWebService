@@ -7,6 +7,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.CommentService;
 import edu.gadalov.webservice.service.TrackService;
 
+/**Add comment command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class AddCommentCommand extends TracksPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String COMMENT_ERROR = "Comment message can't be empty";

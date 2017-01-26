@@ -9,6 +9,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.TrackService;
 
 
+/**User profile page forward command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class ProfileCommand extends AbstractCommand{
 	private static final String PROFILE_PAGE ="jsp/user-profile.jsp";
 	private static final String EDIT_PROFILE_PAGE = "jsp/edit-profile.jsp";

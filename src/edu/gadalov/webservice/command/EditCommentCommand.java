@@ -5,6 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.CommentService;
 
+/**Edit Comment command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class EditCommentCommand extends TracksPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String EDIT_COMMENT_ERROR_MESSAGE = "Can not update comment";

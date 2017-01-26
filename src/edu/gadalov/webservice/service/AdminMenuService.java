@@ -17,8 +17,15 @@ import edu.gadalov.webservice.entity.AudioTrack;
 import edu.gadalov.webservice.entity.Discount;
 import edu.gadalov.webservice.entity.User;
 
+/**Admin menu service class.
+ * @author Maxim Gadalov
+ *
+ */
 public class AdminMenuService {
 	private static final String SAVE_DIR = "music";
+	/**Return list of Users
+	 * @return list of User objects
+	 */
 	public List<User> getAllUsers(){
 		UserDAO userDAO = new UserDAO();
 		List<User> list = new ArrayList<>();
@@ -29,6 +36,9 @@ public class AdminMenuService {
 		}
 		return list;
 	}
+	/**Return AudioTracks
+	 * @return list of AduioTrack objects
+	 */
 	public List<AudioTrack> getAllTracks(){
 		AudioTrackDAO trackDAO = new AudioTrackDAO();
 		List<AudioTrack> list = new ArrayList<>();
@@ -39,6 +49,12 @@ public class AdminMenuService {
 		}
 		return list;
 	}
+	/**Upload music file to the server
+	 * @param request - HttpServletRequest
+	 * @return String file path
+	 * @throws IOException @see {@link IOException#IOException()}
+	 * @throws ServletException @see {@link ServletException#ServletException()}
+	 */
 	public String uploadTrack(HttpServletRequest request) throws IOException, ServletException{
 		String savePath = request.getServletContext().getRealPath("") + SAVE_DIR;
 
@@ -57,6 +73,10 @@ public class AdminMenuService {
         }
         return trackPath;
 	}
+	/**Insert AudioTrack into database
+	 * @param track - AudioTrack @see {@link AudioTrack#AudioTrack(int, User, String, String, String, String, float, String, boolean)}
+	 * @return true if insert was successful, false - otherwise
+	 */
 	public boolean createTrack(AudioTrack track){
 		AudioTrackDAO trackDAO = new AudioTrackDAO();
 		boolean result = false;
@@ -68,6 +88,9 @@ public class AdminMenuService {
 		return result;
 		
 	}
+	/**Return list of Discounts
+	 * @return list of Discount objects
+	 */
 	public List<Discount> getDiscounts(){
 		List<Discount> list = new ArrayList<>();
 		DiscountDAO discountDAO = new DiscountDAO(ConnectionPool.getInstance().getConnectionFromPool());

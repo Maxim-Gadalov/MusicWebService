@@ -237,7 +237,7 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	/**Mark audio track as invisible.(visibility = false) 
 	 * @param singer - name of performer @see {@link AudioTrack#getSinger()}
 	 * @param trackName - audio track name @see {@link AudioTrack#getTrackName()}
-	 * @return
+	 * @return true if update was successful, false - otherwise
 	 */
 	public boolean deleteTrack(String singer, String trackName){
 		boolean result = false;

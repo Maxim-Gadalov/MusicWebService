@@ -1,7 +1,15 @@
 package edu.gadalov.webservice.command;
 
 
+/**Manager of command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class CommandManager {
+	/**Return command
+	 * @param command - String command
+	 * @return AbstractCommand
+	 */
 	public AbstractCommand getCommand(String command){
 		switch(command){
 		case "registration":

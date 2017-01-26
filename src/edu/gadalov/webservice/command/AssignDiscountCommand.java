@@ -7,6 +7,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.DiscountService;
 import edu.gadalov.webservice.service.UserService;
 
+/**Assign Discount command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class AssignDiscountCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String USER_ERROR = "User not found";

@@ -7,6 +7,10 @@ import edu.gadalov.webservice.entity.Role;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.RegistrationService;
 
+/**Registration command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class RegistrationCommand extends AbstractCommand{ 
 	private static final String REGISTRATION_PAGE = "jsp/registration.jsp";
 	private static final String MAIN_PAGE = "jsp/login.jsp";

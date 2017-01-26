@@ -7,6 +7,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.BanService;
 import edu.gadalov.webservice.service.UserService;
 
+/**Ban user command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class BanUserCommand extends AdminPageCommand{
 	private static final String MAIN_PAGE = "main.jsp";
     private static final String NO_SUCH_USER_MESSAGE = "User not found";

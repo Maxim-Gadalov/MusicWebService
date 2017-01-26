@@ -9,6 +9,10 @@ import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.EditProfileService;
 import edu.gadalov.webservice.service.TrackService;
 
+/**Edit user profile command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class EditProfileCommand extends AbstractCommand{
 	private static final String EDIT_PROFILE_PAGE = "jsp/edit-profile.jsp";
 	private static final String PROFILE_PAGE = "jsp/user-profile.jsp";

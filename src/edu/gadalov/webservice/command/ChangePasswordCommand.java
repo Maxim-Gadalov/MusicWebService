@@ -5,6 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.service.ChangePasswordService;
 
+/**Change user password command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class ChangePasswordCommand extends AbstractCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String CHANGE_PASSWORD_PAGE = "jsp/change-password.jsp";

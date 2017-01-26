@@ -7,6 +7,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**Custom pagination jstl tag. Paginate audio track pages.
+ * @author Maxim Gadalov
+ *
+ */
 public class CustomPaginationTag extends TagSupport{
 	private static final long serialVersionUID = -4575319305979581968L;
 	private static final Logger LOG = LogManager.getLogger(CustomPaginationTag.class);

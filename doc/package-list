@@ -1,0 +1,11 @@
+edu.gadalov.webservice.command
+edu.gadalov.webservice.connection
+edu.gadalov.webservice.customtag
+edu.gadalov.webservice.dao
+edu.gadalov.webservice.entity
+edu.gadalov.webservice.filter
+edu.gadalov.webservice.localebundle
+edu.gadalov.webservice.service
+edu.gadalov.webservice.servlet
+edu.gadalov.webservice.util
+edu.gadalov.webservice.validation

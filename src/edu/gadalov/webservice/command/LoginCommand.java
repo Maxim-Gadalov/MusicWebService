@@ -8,6 +8,10 @@ import edu.gadalov.webservice.service.BanService;
 import edu.gadalov.webservice.service.LoginService;
 import edu.gadalov.webservice.service.UserService;
 
+/**Log in command class.
+ * @author Maxim Gadalov
+ *
+ */
 public class LoginCommand extends AbstractCommand{
 	private static final String MAIN_PAGE = "main.jsp";
 	private static final String LOGIN_PAGE = "jsp/login.jsp";
