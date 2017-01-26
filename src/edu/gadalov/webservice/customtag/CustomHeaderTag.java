@@ -25,6 +25,8 @@ public class CustomHeaderTag extends TagSupport{
 	private static final String LOGIN_PAGE_PATH = "/MusicWebService/jsp/login.jsp";
 	private static final String SIGN_UP_PAGE_PATH = "/MusicWebService/jsp/registration.jsp";
 	private static final String HOME_PAGE_PATH = "/MusicWebService/main.jsp";
+	private static final String ABOUT_US_PATH = "/MusicWebService/jsp/about_us.jsp";
+	private static final String CONTACT_PATH = "/MusicWebService/jsp/contact.jsp";
 	private static final String SPLITTER = "_";
 	private static final int LOCALE_LANGUAGE_INDEX = 0;
 	private static final int LOCALE_COUNTRY_INDEX = 1;
@@ -52,7 +54,7 @@ public class CustomHeaderTag extends TagSupport{
 					+ "<div>"
 					+ "<ul class=navigation>"
 					+ "<li><a href="+HOME_PAGE_PATH+" title=Home>"+bundle.getValue("home")+"</a></li>"
-					+ "<li><a href=# title=About&nbsp;us>"+bundle.getValue("about_us")+"</a></li>"
+					+ "<li><a href="+ABOUT_US_PATH+" title=About&nbsp;us>"+bundle.getValue("about_us")+"</a></li>"
 					+ "<li><a href=# onclick=document.getElementById('tracks').submit();return&nbsp;false;"
 					+ "title=Tracks>"+bundle.getValue("tracks")+"</a>"
 					+ "<ul>"
@@ -73,7 +75,7 @@ public class CustomHeaderTag extends TagSupport{
 					+ "title=Techno>Techno</a></li>"
 					+ "</ul>"
 					+ "</li>"
-					+ "<li><a href= title=Contact>"+bundle.getValue("contact")+"</a></li>"
+					+ "<li><a href="+CONTACT_PATH+" title=Contact>"+bundle.getValue("contact")+"</a></li>"
 					+ "</ul>"
 					+ "</div>"
 					+ "</div>"
@@ -87,7 +89,7 @@ public class CustomHeaderTag extends TagSupport{
 						+ "<div>"
 						+ "<ul class=navigation>"
 						+ "<li><a href="+HOME_PAGE_PATH+" title=Home>"+bundle.getValue("home")+"</a></li>"
-						+ "<li><a href= title=About&nbsp;us>"+bundle.getValue("about_us")+"</a></li>"
+						+ "<li><a href="+ABOUT_US_PATH+" title=About&nbsp;us>"+bundle.getValue("about_us")+"</a></li>"
 						+ "<li><a href=# onclick=document.getElementById('tracks').submit();return&nbsp;false;"
 						+ "title=Tracks>"+bundle.getValue("tracks")+"</a>"
 						+ "<ul>"
@@ -108,7 +110,7 @@ public class CustomHeaderTag extends TagSupport{
 						+ "title=Techno>Techno</a></li>"
 						+ "</ul>"
 						+ "</li>"
-						+ "<li><a href= title=Contact>"+bundle.getValue("contact")+"</a></li>"
+						+ "<li><a href="+CONTACT_PATH+" title=Contact>"+bundle.getValue("contact")+"</a></li>"
 						+ "<li><a href=# onclick=document.getElementById('form').submit();return&nbsp;false;"
 						+ " title=Administration>"+bundle.getValue("administration")+"</a></li>"
 						+ "</ul>"
@@ -134,7 +136,7 @@ public class CustomHeaderTag extends TagSupport{
 						+ "<div>"
 						+ "<ul class=navigation>"
 						+ "<li><a href="+HOME_PAGE_PATH+" title=Home>"+bundle.getValue("home")+"</a></li>"
-						+ "<li><a href= title=About&nbsp;us>"+bundle.getValue("about_us")+"</a></li>"
+						+ "<li><a href="+ABOUT_US_PATH+" title=About&nbsp;us>"+bundle.getValue("about_us")+"</a></li>"
 						+ "<li><a href=# onclick=document.getElementById('tracks').submit();return&nbsp;false;"
 						+ "title=Tracks>"+bundle.getValue("tracks")+"</a>"
 						+ "<ul>"
@@ -155,7 +157,7 @@ public class CustomHeaderTag extends TagSupport{
 						+ "title=Techno>Techno</a></li>"
 						+ "</ul>"
 						+ "</li>"
-						+ "<li><a href= title=Contact>"+bundle.getValue("contact")+"</a></li>"
+						+ "<li><a href="+CONTACT_PATH+" title=Contact>"+bundle.getValue("contact")+"</a></li>"
 						+ "</ul>"
 						+ "</div>"
 						+ "</div>"
