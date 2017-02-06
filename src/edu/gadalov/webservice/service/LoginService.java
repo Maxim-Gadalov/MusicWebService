@@ -21,12 +21,12 @@ public class LoginService {
 	public String loginCheck(String login,String password){
 		String errorMessage = new String();
 		UserValidation validation = new UserValidation();
-		User user = null;
+		User user = new User();
 		UserDAO userDAO = new UserDAO();
 		try{
 		if(validation.isEmail(login)){
 			user = userDAO.findByEmail(login);
-			if(user == null){
+			if(user.isUntapped()){
 				errorMessage = WRONG_EMAIL_MESSAGE;
 			} else{
 				if(!user.getPassword().equals(EncryptionPassword.encrypt(password))){
@@ -35,7 +35,7 @@ public class LoginService {
 			}
 		}else{
 			user = userDAO.findByNickname(login);
-			if(user == null){
+			if(user.isUntapped()){
 				errorMessage = WRONG_NICKNAME_MESSAGE;
 			} else{
 				if(!user.getPassword().equals(EncryptionPassword.encrypt(password))){

@@ -1,8 +1,7 @@
 package edu.gadalov.webservice.service;
 
-
-import edu.gadalov.webservice.dao.BanListDAO;
-import edu.gadalov.webservice.entity.BanList;
+import edu.gadalov.webservice.dao.UserBanDAO;
+import edu.gadalov.webservice.entity.UserBan;
 
 /**Ban user service class.
  * @author Maxim Gadalov
@@ -13,9 +12,9 @@ public class BanService {
 	 * @param entity - BanList @see {@link BanList#BanList(int, edu.gadalov.webservice.entity.User, String, int)}
 	 * @return true if insert was successful, false - otherwise
 	 */
-	public boolean banUser(BanList entity){
+	public boolean banUser(UserBan entity){
 		boolean result = false;
-		BanListDAO dao = new BanListDAO();
+		UserBanDAO dao = new UserBanDAO();
 		try{
 			result = dao.create(entity);
 		} finally{
@@ -29,7 +28,7 @@ public class BanService {
 	 */
 	public boolean removeBan(int idUser){
 		boolean result = false;
-		BanListDAO dao = new BanListDAO();
+		UserBanDAO dao = new UserBanDAO();
 		try{
 			result = dao.deleteById(idUser);
 		} finally{
@@ -42,22 +41,22 @@ public class BanService {
 	 * @return true if user was not ban, false - otherwise
 	 */
 	public boolean checkBanUser(int idUser){
-		BanList ban = null;
-		BanListDAO dao = new BanListDAO();
+		UserBan ban = new UserBan();
+		UserBanDAO dao = new UserBanDAO();
 		try{
 			ban = dao.findById(idUser);
 		}finally{
 			dao.close(dao.getConnection());
 		}
-		return (ban == null);
+		return (ban.isUntapped());
 	}
 	/**Return ban info
 	 * @param idUser - integer user id
 	 * @return BanList @see {@link BanList#BanList(int, edu.gadalov.webservice.entity.User, String, int)}
 	 */
-	public BanList getBanInfo(int idUser){
-		BanList ban = null;
-		BanListDAO dao = new BanListDAO();
+	public UserBan getBanInfo(int idUser){
+		UserBan ban = new UserBan();
+		UserBanDAO dao = new UserBanDAO();
 		try{
 			ban = dao.findById(idUser);
 		} finally{

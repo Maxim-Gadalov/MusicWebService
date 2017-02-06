@@ -16,7 +16,7 @@ public class UserService {
 	 * @return User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
 	 */
 	public User getUser(String login){
-		User user = null;
+		User user = new User();
 		UserValidation validation = new UserValidation();
 		UserDAO userDAO = new UserDAO();
 		try{
@@ -57,7 +57,7 @@ public class UserService {
 	 * @return User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, Discount, String, String)}
 	 */
 	public User getUser(int id){
-		User user = null;
+		User user = new User();
 		UserDAO userDAO = new UserDAO();
 		try{
 			user = userDAO.findById(id);

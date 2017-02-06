@@ -2,8 +2,8 @@ package edu.gadalov.webservice.command;
 
 import javax.servlet.http.HttpServletRequest;
 
-import edu.gadalov.webservice.entity.BanList;
 import edu.gadalov.webservice.entity.User;
+import edu.gadalov.webservice.entity.UserBan;
 import edu.gadalov.webservice.service.BanService;
 import edu.gadalov.webservice.service.UserService;
 
@@ -30,7 +30,7 @@ public class BanUserCommand extends AdminPageCommand{
 		User user = userService.getUser(userLogin);
 		BanService service = new BanService();
 		String errorMessage = new String();
-		if(user == null){
+		if(user.isUntapped()){
 			errorMessage = NO_SUCH_USER_MESSAGE;
 		} else if(userService.isAdmin(user)){
 			errorMessage = BAN_ADMIN_MESSAGE;
@@ -38,7 +38,7 @@ public class BanUserCommand extends AdminPageCommand{
 			errorMessage = DOUBLE_BAN_ERROR_MESSAGE;
 		}
 		if(errorMessage.isEmpty()){
-			if(service.banUser(new BanList(1,user,reason,admin.getId()))){
+			if(service.banUser(new UserBan(1,user,reason,admin.getId()))){
 				request.setAttribute("success", true);
 				return SUCCESS_URL_PATH;
 			}

@@ -1,10 +1,13 @@
 package edu.gadalov.webservice.entity;
+
+import edu.gadalov.webservice.util.Unusable;
+
 /**Entity class for interaction with database information and business logic.
  * Discount object
  * @author Maxim Gadalov
  *
  */
-public class Discount {
+public class Discount implements Unusable{
 	private int id;
 	private int bonus;
 	/**Create object with following parameters
@@ -14,6 +17,11 @@ public class Discount {
 	public Discount(int id,int bonus){
 		this.id = id;
 		this.bonus = bonus;	
+	}
+	/**
+	 * Default constructor which create empty object.
+	 */
+	public Discount(){
 	}
 	/**
 	 * @return id of the object 
@@ -38,5 +46,9 @@ public class Discount {
 	 */
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.id == 0) & (this.bonus == 0));
 	}
 }

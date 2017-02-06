@@ -49,7 +49,7 @@ public class CommentService {
 	 */
 	public Comment getComment(Integer id){
 		CommentDAO dao = new CommentDAO();
-		Comment comment = null;
+		Comment comment = new Comment();
 		try{
 			comment = dao.findById(id);
 		} finally{
@@ -66,7 +66,7 @@ public class CommentService {
 	public boolean editComment(Integer id,String newText, User admin){
 		boolean result = false;
 		Comment comment = getComment(id);
-		if(comment != null){
+		if(!comment.isUntapped()){
 			comment.setText(newText+"(edit by "+admin.getNickname()+")");
 			CommentDAO dao = new CommentDAO();
 			try{

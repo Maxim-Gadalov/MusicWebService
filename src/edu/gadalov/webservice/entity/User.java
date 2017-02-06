@@ -1,11 +1,13 @@
 package edu.gadalov.webservice.entity;
 
+import edu.gadalov.webservice.util.Unusable;
+
 /**Entity class for interaction with database information and business logic.
  * User object.
  * @author Maxim Gadalov
  *
  */
-public class User {
+public class User implements Unusable{
 	private int id;
 	private Role role;
 	private String nickname;
@@ -34,6 +36,11 @@ public class User {
 		this.bonus = bonus;
 		this.skype = skype;
 		this.phoneNumber = phoneNumber;
+	}
+	/**
+	 * Default constructor which create empty object.
+	 */
+	public User(){
 	}
 	public int getId() {
 		return id;
@@ -82,5 +89,11 @@ public class User {
 	}
 	public String getPhoneNumber(){
 		return phoneNumber;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.bonus == null) & (this.id == 0) & (this.email == null) &
+				(this.nickname == null) & (this.password == null) & (this.phoneNumber == null) &
+				(this.role == null) & (this.skype == null));
 	}
 }

@@ -26,7 +26,7 @@ public class UnbanUserCommand extends AdminPageCommand{
 		User user = userService.getUser(userLogin);
 		BanService service = new BanService();
 		String errorMessage = new String();
-		if(user == null){
+		if(user.isUntapped()){
 			errorMessage = NO_SUCH_USER_MESSAGE;
 		} else if(service.checkBanUser(user.getId())){
 			errorMessage = UNBAN_ERROR_MESSAGE;

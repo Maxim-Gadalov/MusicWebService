@@ -29,7 +29,7 @@ public class AddCommentCommand extends TracksPageCommand{
 		TrackService trackService = new TrackService();
 		AudioTrack track = trackService.getTrackById(Integer.valueOf(idTrack));
 		String errorMessage = new String();
-		if((track == null)){
+		if((track.isUntapped())){
 			errorMessage = DB_ERROR;
 		} 
 		if(commentText.trim().isEmpty()){

@@ -1,12 +1,14 @@
 package edu.gadalov.webservice.entity;
 
 import java.sql.Timestamp;
+
+import edu.gadalov.webservice.util.Unusable;
 /**Entity class for interaction with database information and business logic.
  * Comment object.
  * @author Maxim Gadalov
  *
  */
-public class Comment {
+public class Comment implements Unusable{
 	private int id;
 	private User user;
 	private AudioTrack track;
@@ -25,6 +27,11 @@ public class Comment {
 		this.track = track;
 		this.text = text;
 		this.date = date;
+	}
+	/**
+	 * Default constructor which create empty object.
+	 */
+	public Comment(){
 	}
 	/**
 	 * @return id current object
@@ -85,5 +92,10 @@ public class Comment {
 	 */
 	public void setDate(Timestamp date) {
 		this.date = date;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.id == 0) & (this.text == null) & (this.track == null) &
+				(this.user == null) & (this.date == null));
 	}	
 }

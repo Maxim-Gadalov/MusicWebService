@@ -23,7 +23,7 @@ public class EditTrackPageCommand extends AdminPageCommand{
 		TrackService service = new TrackService();
 		String errorMessage = new String();
 		AudioTrack track = service.getTrackById(Integer.valueOf(id));
-		if(track == null){
+		if(track.isUntapped()){
 			errorMessage = TRACK_ERROR;
 			request.setAttribute("editErrorMessage", errorMessage);
 			return super.execute(request);

@@ -19,7 +19,6 @@ public class LanguageCommand extends AbstractCommand{
 		} else if(RUSSIAN_LANGUAGE.equals(locale)){
 			request.getSession().setAttribute("locale", "ru_RU");
 		}
-		
 		return MAIN_PAGE;
 	}
 

@@ -60,6 +60,22 @@ public abstract class AbstractDAO<K,T> {
 			}
 		}
 		
+	} // нововведения
+	/**Handling SQL Exceptions
+	 * @param methodBody object of body logic function
+	 * @param st Statement
+	 */
+	public void exceptionHandling(ExceptionHandling methodBody,Statement st){
+		try{
+			methodBody.run(st);
+		} catch(SQLException e){
+			LOG.error(e);
+		} finally{
+			statementClose(st);
+		}
 	}
-	
+	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
+	 * @return connection
+	 */
+	public abstract Connection getConnection();
 }

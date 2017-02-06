@@ -8,29 +8,30 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import edu.gadalov.webservice.connection.ConnectionPool;
 import edu.gadalov.webservice.entity.AudioTrack;
+import edu.gadalov.webservice.util.Bool;
 
 /**Audio track DAO class @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
  * @author Maxim Gadalov
  *
  */
 public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
-	private static final Logger LOG = LogManager.getLogger(AudioTrackDAO.class);
-	private static final String ADD_TRACK ="INSERT INTO `mydb`.`audio_tracks` (`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`albom`,`genre`) VALUES (?,?,?,?,?,?,?)";
-	private static final String SELECT_ALL_TRACKS = "SELECT * FROM `mydb`.`audio_tracks`";
-	private static final String SELECT_TRACK_BY_ID = "SELECT * FROM `mydb`.`audio_tracks` WHERE `id_audio_track` = ?";
-	private static final String SELECT_TRACKS_BY_GENRE = "SELECT * FROM `mydb`.`audio_tracks` WHERE `genre` = ? AND `visibility`= 1";
-	private static final String DELETE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `visibility`= 0 WHERE `singer` = ? AND `track_name` = ?";
-	private static final String SELECT_VISIBLE_TRACKS = "SELECT * FROM `mydb`.`audio_tracks` WHERE `visibility` = 1";
-	private static final String UPDATE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `singer` = ?, `track_name` = ?, `cost` = ?, `albom` = ?, `genre` = ? WHERE `id_audio_track` = ?";
+	private static final int INDEX_VISIBLE_TRACKS = 1;
+	private static final int INDEX_INVISIBLE_TRACKS = 0;
+	private static final String ADD_TRACK ="INSERT INTO `mydb`.`audio_tracks` (`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`album`,`genre`,`visibility`) VALUES (?,?,?,?,?,?,?,"+INDEX_VISIBLE_TRACKS+")";
+	private static final String SELECT_ALL_TRACKS = "SELECT `id_audio_track`,`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`album`,`genre`,`visibility` "
+			+ "FROM `mydb`.`audio_tracks`";
+	private static final String SELECT_TRACK_BY_ID = "SELECT `id_audio_track`,`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`album`,`genre`,`visibility`"
+			+ " FROM `mydb`.`audio_tracks` WHERE `id_audio_track` = ?";
+	private static final String SELECT_TRACKS_BY_GENRE = "SELECT `id_audio_track`,`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`album`,`genre`,`visibility`"
+			+ " FROM `mydb`.`audio_tracks` WHERE `genre` = ? AND `visibility`= "+INDEX_VISIBLE_TRACKS;
+	private static final String DELETE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `visibility`= "+INDEX_INVISIBLE_TRACKS+" WHERE `singer` = ? AND `track_name` = ?";
+	private static final String SELECT_VISIBLE_TRACKS = "SELECT `id_audio_track`,`singer`,`track_name`,`cost`,`id_admin`,`music_file`,`album`,`genre`,`visibility`"
+			+ " FROM `mydb`.`audio_tracks` WHERE `visibility` = "+INDEX_VISIBLE_TRACKS;
+	private static final String UPDATE_TRACK = "UPDATE `mydb`.`audio_tracks` SET `singer` = ?, `track_name` = ?, `cost` = ?, `album` = ?, `genre` = ? WHERE `id_audio_track` = ?";
 	private Connection cn = ConnectionPool.getInstance().getConnectionFromPool();
-	/**Return connection taken from ConnectionPool @see {@link ConnectionPool#getConnectionFromPool()}
-	 * @return connection
-	 */
+	
 	public Connection getConnection(){
 		return cn;
 	}
@@ -39,92 +40,91 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	public List<AudioTrack> findAll() {
 		 List<AudioTrack> tracks = new ArrayList<>();
 		 Statement st = null;
-		 try{
-			 st = cn.createStatement();
-			 ResultSet rs = st.executeQuery(SELECT_ALL_TRACKS);
-			 while(rs.next()){
-				 UserDAO userDAO = new UserDAO();
-				 try{
-				 AudioTrack track = new AudioTrack(
-						 rs.getInt("id_audio_track"),
-						 userDAO.findById(rs.getInt("id_admin")),
-						 rs.getString("singer"),
-						 rs.getString("track_name"),
-						 rs.getString("albom"),
-						 rs.getString("music_file"),
-						 rs.getFloat("cost"),
-						 rs.getString("genre"),
-						 rs.getBoolean("visibility"));
-				 tracks.add(track);
-				 } finally{
-					 userDAO.close(userDAO.getConnection());
+		 ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.createStatement();
+				 ResultSet rs = st.executeQuery(SELECT_ALL_TRACKS);
+				 while(rs.next()){
+					 UserDAO userDAO = new UserDAO();
+					 try{
+					 AudioTrack track = new AudioTrack(
+							 rs.getInt("id_audio_track"),
+							 userDAO.findById(rs.getInt("id_admin")),
+							 rs.getString("singer"),
+							 rs.getString("track_name"),
+							 rs.getString("album"),
+							 rs.getString("music_file"),
+							 rs.getFloat("cost"),
+							 rs.getString("genre"),
+							 rs.getBoolean("visibility"));
+					 tracks.add(track);
+					 } finally{
+						 userDAO.close(userDAO.getConnection());
+					 }
 				 }
-			 }
-		 } catch(SQLException e){
-			 LOG.error(e);
-		 }
-		 finally{
-			 statementClose(st);
-		 }
+			}
+		};
+		exceptionHandling(method, st);
 		return tracks;
 	}
 
 	@Override
 	public AudioTrack findById(Integer id) {
 		PreparedStatement st = null;
-		AudioTrack track = null;
-		try{
-			st = cn.prepareStatement(SELECT_TRACK_BY_ID);
-			st.setInt(1, id);
-			ResultSet rs = st.executeQuery();
-			while(rs.next()){
-				 UserDAO userDAO = new UserDAO();
-				 try{
-				  track = new AudioTrack(
-						 rs.getInt("id_audio_track"),
-						 userDAO.findById(rs.getInt("id_admin")),
-						 rs.getString("singer"),
-						 rs.getString("track_name"),
-						 rs.getString("albom"),
-						 rs.getString("music_file"),
-						 rs.getFloat("cost"),
-						 rs.getString("genre"),
-						 rs.getBoolean("visibility"));
-				 } finally{
-					 userDAO.close(userDAO.getConnection());
+		AudioTrack track = new AudioTrack();
+		ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.prepareStatement(SELECT_TRACK_BY_ID);
+				((PreparedStatement) st).setInt(1, id);
+				ResultSet rs = ((PreparedStatement) st).executeQuery();
+				while(rs.next()){
+					 UserDAO userDAO = new UserDAO();
+					 try{
+					     track.setId(rs.getInt("id_audio_track"));
+						 track.setUser(userDAO.findById(rs.getInt("id_admin")));
+						 track.setSinger(rs.getString("singer"));
+						 track.setTrackName(rs.getString("track_name"));
+						 track.setAlbum(rs.getString("album"));
+						 track.setFilePath(rs.getString("music_file"));
+						 track.setCost(rs.getFloat("cost"));
+						 track.setGenre(rs.getString("genre"));
+						 track.setVisibility(rs.getBoolean("visibility"));
+					 } finally{
+						 userDAO.close(userDAO.getConnection());
+					 }
 				 }
-			 }
-		 } catch(SQLException e){
-			 LOG.error(e);
-		 }
-		 finally{
-			 statementClose(st);
-		 }
+			}
+		};
+		exceptionHandling(method, st);
 		return track;
 	}
 
 	@Override
 	public boolean create(AudioTrack entity) {
 		PreparedStatement st = null;
-		boolean result = false;
-		try{
-			st = cn.prepareStatement(ADD_TRACK);
-			st.setString(1,entity.getSinger());
-			st.setString(2,entity.getTrackName());
-			st.setFloat(3, entity.getCost());
-			st.setInt(4, entity.getUser().getId());
-			st.setString(5, entity.getFilePath());
-			st.setString(6, entity.getAlbum());
-			st.setString(7, entity.getGenre());
-			st.executeUpdate();
-			result = true;
-		}catch(SQLException e){
-			LOG.error(e);
-		}
-		finally{
-			statementClose(st);
-		}
-		return result;
+		Bool result = new Bool();
+		ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.prepareStatement(ADD_TRACK);
+				((PreparedStatement) st).setString(1,entity.getSinger());
+				((PreparedStatement) st).setString(2,entity.getTrackName());
+				((PreparedStatement) st).setFloat(3, entity.getCost());
+				((PreparedStatement) st).setInt(4, entity.getUser().getId());
+				((PreparedStatement) st).setString(5, entity.getFilePath());
+				((PreparedStatement) st).setString(6, entity.getAlbum());
+				((PreparedStatement) st).setString(7, entity.getGenre());
+				((PreparedStatement) st).executeUpdate();
+				result.setTrueValue();
+			}
+		};
+		exceptionHandling(method, st);
+		return result.getBoolValue();
 	}
 
 	@Override
@@ -143,35 +143,35 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	public List<AudioTrack> findByGenre(String genre){
 		List<AudioTrack> tracks = new ArrayList<>();
 		PreparedStatement st = null;
-		try{
-			st = cn.prepareStatement(SELECT_TRACKS_BY_GENRE);
-			st.setString(1, genre);
-			ResultSet rs = st.executeQuery();
-			while(rs.next()){
-				 UserDAO userDAO = new UserDAO();
-				 try{
-					AudioTrack track = new AudioTrack(
-						 rs.getInt("id_audio_track"),
-						 userDAO.findById(rs.getInt("id_admin")),
-						 rs.getString("singer"),
-						 rs.getString("track_name"),
-						 rs.getString("albom"),
-						 rs.getString("music_file"),
-						 rs.getFloat("cost"),
-						 rs.getString("genre"),
-						 rs.getBoolean("visibility"));
-					tracks.add(track);
-				 } finally{
-					 userDAO.close(userDAO.getConnection());
+		ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.prepareStatement(SELECT_TRACKS_BY_GENRE);
+				((PreparedStatement) st).setString(1, genre);
+				ResultSet rs = ((PreparedStatement) st).executeQuery();
+				while(rs.next()){
+					 UserDAO userDAO = new UserDAO();
+					 try{
+						AudioTrack track = new AudioTrack(
+							 rs.getInt("id_audio_track"),
+							 userDAO.findById(rs.getInt("id_admin")),
+							 rs.getString("singer"),
+							 rs.getString("track_name"),
+							 rs.getString("album"),
+							 rs.getString("music_file"),
+							 rs.getFloat("cost"),
+							 rs.getString("genre"),
+							 rs.getBoolean("visibility"));
+						tracks.add(track);
+					 } finally{
+						 userDAO.close(userDAO.getConnection());
+					 }
 				 }
-			 }
-		 } catch(SQLException e){
-			 LOG.error(e);
-		 }
-		 finally{
-			 statementClose(st);
-		 }
-		return tracks;	
+			}
+		};
+		exceptionHandling(method, st);
+		return tracks;
 	}
 	/**Returns non-removal marked AudioTracks @see {@link AudioTrack#AudioTrack(int, edu.gadalov.webservice.entity.User, String, String, String, String, float, String, boolean)}
 	 * @return list of AduioTrack 
@@ -179,33 +179,33 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	public List<AudioTrack> findVisibleTracks() {
 		 List<AudioTrack> tracks = new ArrayList<>();
 		 Statement st = null;
-		 try{
-			 st = cn.createStatement();
-			 ResultSet rs = st.executeQuery(SELECT_VISIBLE_TRACKS);
-			 while(rs.next()){
-				 UserDAO userDAO = new UserDAO();
-				 try{
-				 AudioTrack track = new AudioTrack(
-						 rs.getInt("id_audio_track"),
-						 userDAO.findById(rs.getInt("id_admin")),
-						 rs.getString("singer"),
-						 rs.getString("track_name"),
-						 rs.getString("albom"),
-						 rs.getString("music_file"),
-						 rs.getFloat("cost"),
-						 rs.getString("genre"),
-						 rs.getBoolean("visibility"));
-				 tracks.add(track);
-				 } finally{
-					 userDAO.close(userDAO.getConnection());
+		 ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.createStatement();
+				 ResultSet rs = st.executeQuery(SELECT_VISIBLE_TRACKS);
+				 while(rs.next()){
+					 UserDAO userDAO = new UserDAO();
+					 try{
+					 AudioTrack track = new AudioTrack(
+							 rs.getInt("id_audio_track"),
+							 userDAO.findById(rs.getInt("id_admin")),
+							 rs.getString("singer"),
+							 rs.getString("track_name"),
+							 rs.getString("album"),
+							 rs.getString("music_file"),
+							 rs.getFloat("cost"),
+							 rs.getString("genre"),
+							 rs.getBoolean("visibility"));
+					 tracks.add(track);
+					 } finally{
+						 userDAO.close(userDAO.getConnection());
+					 }
 				 }
-			 }
-		 } catch(SQLException e){
-			 LOG.error(e);
-		 }
-		 finally{
-			 statementClose(st);
-		 }
+			}
+		};
+		exceptionHandling(method, st);
 		return tracks;
 	}
 	/**Update database table.
@@ -213,26 +213,25 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	 * @return true if object update successfully , false - otherwise
 	 */
 	public boolean updateTrack(AudioTrack entity){
-		boolean result = false;
+		Bool result = new Bool();
 		PreparedStatement st = null;
-		try{
-			st = cn.prepareStatement(UPDATE_TRACK);
-			st.setString(1,entity.getSinger());
-			st.setString(2, entity.getTrackName());
-			st.setFloat(3, entity.getCost());
-			st.setString(4, entity.getAlbum());
-			st.setString(5, entity.getGenre());
-			st.setInt(6, entity.getId());
-			st.executeUpdate();
-			result = true;
-		}catch(SQLException e){
-			LOG.error(e);
-		}
-		finally{
-			statementClose(st);
-		}
-		return result;
-	
+		ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.prepareStatement(UPDATE_TRACK);
+				((PreparedStatement) st).setString(1,entity.getSinger());
+				((PreparedStatement) st).setString(2, entity.getTrackName());
+				((PreparedStatement) st).setFloat(3, entity.getCost());
+				((PreparedStatement) st).setString(4, entity.getAlbum());
+				((PreparedStatement) st).setString(5, entity.getGenre());
+				((PreparedStatement) st).setInt(6, entity.getId());
+				((PreparedStatement) st).executeUpdate();
+				result.setTrueValue();
+			}
+		};
+		exceptionHandling(method, st);
+		return result.getBoolValue();
 	}
 	/**Mark audio track as invisible.(visibility = false) 
 	 * @param singer - name of performer @see {@link AudioTrack#getSinger()}
@@ -240,21 +239,20 @@ public class AudioTrackDAO extends AbstractDAO<Integer, AudioTrack>{
 	 * @return true if update was successful, false - otherwise
 	 */
 	public boolean deleteTrack(String singer, String trackName){
-		boolean result = false;
+		Bool result = new Bool();
 		PreparedStatement st = null;
-		try{
-			st = cn.prepareStatement(DELETE_TRACK);
-			st.setString(1, singer);
-			st.setString(2, trackName);
-			st.executeUpdate();
-			result = true;
-		} catch (SQLException e){
-			LOG.error(e);
-		}
-		finally{
-			statementClose(st);
-		}
-		return result;
-		
+		ExceptionHandling method = new ExceptionHandling() {
+			
+			@Override
+			public void run(Statement st) throws SQLException {
+				st = cn.prepareStatement(DELETE_TRACK);
+				((PreparedStatement) st).setString(1, singer);
+				((PreparedStatement) st).setString(2, trackName);
+				((PreparedStatement) st).executeUpdate();
+				result.setTrueValue();
+			}
+		};
+		exceptionHandling(method, st);
+		return result.getBoolValue();
 	}
 }

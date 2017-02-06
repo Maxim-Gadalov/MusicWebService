@@ -2,8 +2,9 @@ package edu.gadalov.webservice.command;
 
 import javax.servlet.http.HttpServletRequest;
 
-import edu.gadalov.webservice.entity.BanList;
+
 import edu.gadalov.webservice.entity.User;
+import edu.gadalov.webservice.entity.UserBan;
 import edu.gadalov.webservice.service.BanService;
 import edu.gadalov.webservice.service.LoginService;
 import edu.gadalov.webservice.service.UserService;
@@ -33,7 +34,7 @@ public class LoginCommand extends AbstractCommand{
 			User user = userService.getUser(login);
 			if(user != null){
 				if(!banService.checkBanUser(user.getId())){
-					BanList ban = banService.getBanInfo(user.getId());
+					UserBan ban = banService.getBanInfo(user.getId());
 					request.setAttribute("banReason", ban.getReason());
 					request.setAttribute("nickname", user.getNickname());
 					request.setAttribute("email", user.getEmail());

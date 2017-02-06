@@ -33,7 +33,7 @@ public class EditTrackCommand extends AdminPageCommand{
 		AudioTrack track = service.getTrackById(Integer.valueOf(trackId));
 		String errorMessage = new String();
 		errorMessage = validation.checkCostValidation(cost);
-		if(track == null){
+		if(track.isUntapped()){
 			errorMessage = DB_ERROR_SELECT;
 		}
 		if(errorMessage.isEmpty()){

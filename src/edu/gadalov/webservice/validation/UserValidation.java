@@ -49,14 +49,14 @@ public class UserValidation {
 	 */
 	public boolean checkEmailUniqueness(User user){
 		UserDAO userDAO = new UserDAO();
-		User temp = null;
+		User temp = new User();
 		try{
 			temp = userDAO.findByEmail(user.getEmail());
 		}
 		finally{
 			userDAO.close(userDAO.getConnection());
 		}
-		return (temp == null);
+		return (temp.isUntapped());
 			
 	}
 	/**Check user nickname uniqueness @see {@link UserValidation#checkNicknameUniqueness(String)}
@@ -65,14 +65,14 @@ public class UserValidation {
 	 */
 	public boolean checkNicknameUniqueness(User user){
 		UserDAO userDAO = new UserDAO();
-		User temp = null;
+		User temp = new User();
 		try{
 			temp = userDAO.findByNickname(user.getNickname());
 		}
 		finally{
 			userDAO.close(userDAO.getConnection());	
 		}
-		return (temp == null);
+		return (temp.isUntapped());
 	}
 	/**Check nickname uniqueness @see {@link UserValidation#checkNicknameUniqueness(User)}
 	 * @param nickname - String nickname
@@ -130,7 +130,7 @@ public class UserValidation {
 	 * @param login - String login
 	 * @return true if login matches email content, false - nickname
 	 */
-	public boolean isEmail(String login){
+	public boolean isEmail(String login){ // вынести в отдельный класс
 		return (login.matches(EMAIL_CHECK_REGEXP));
 	}
 }

@@ -1,11 +1,13 @@
 package edu.gadalov.webservice.entity;
 
+import edu.gadalov.webservice.util.Unusable;
+
 /**Entity class for interaction with database information and business logic.
  * Order of the track object.
  * @author Maxim Gadalov
  *
  */
-public class TrackOrder {
+public class TrackOrder implements Unusable{
 	private User user;
 	private AudioTrack track;
 	/**Create object with following parameters
@@ -15,6 +17,11 @@ public class TrackOrder {
 	public TrackOrder(User user, AudioTrack track){
 		this.user = user;
 		this.track = track;
+	}
+	/**
+	 * Default constructor which create empty object
+	 */
+	public TrackOrder(){
 	}
 	/**
 	 * @return user @see {@link User#User(int, Role, String, String, String, Discount, String, String)}
@@ -39,6 +46,10 @@ public class TrackOrder {
 	 */
 	public void setTrack(AudioTrack track) {
 		this.track = track;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.track == null) & (this.user == null));
 	}
 
 }

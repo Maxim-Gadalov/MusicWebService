@@ -29,10 +29,10 @@ public class AssignDiscountCommand extends AdminPageCommand{
 		Discount bonus = discountService.getDiscount(Integer.valueOf(discount));
 		User user = service.getUser(userLogin);
 		String errorMessage = new String();
-		if(user == null){
+		if(user.isUntapped()){
 			errorMessage = USER_ERROR;
 		}
-		if(bonus == null){
+		if(bonus.isUntapped()){
 			errorMessage = DATABASE_ERROR;
 		}
 		if(errorMessage.isEmpty()){

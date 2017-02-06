@@ -41,7 +41,7 @@ public class AdminPageCommand extends AbstractCommand{
 		if(!discountList.isEmpty()){
 			request.setAttribute("list_discounts", discountList);
 		}
-		if(trackList.isEmpty() || userList.isEmpty() || discountList.isEmpty()){
+		if(trackList.isEmpty() & userList.isEmpty() & discountList.isEmpty()){
 			request.setAttribute("databaseError", DB_ERROR);
 		}
 		return ADMIN_PAGE;

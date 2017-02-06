@@ -23,6 +23,7 @@ import edu.gadalov.webservice.entity.User;
  */
 public class AdminMenuService {
 	private static final String SAVE_DIR = "music";
+	private static final String FILE_SUFFIX = ".mp3";
 	/**Return list of Users
 	 * @return list of User objects
 	 */
@@ -66,7 +67,7 @@ public class AdminMenuService {
         String fileName = new String();       
          for (Part part : request.getParts()) {
             fileName = part.getSubmittedFileName();   
-            if(fileName != null){  
+            if(fileName != null & fileName.endsWith(FILE_SUFFIX)){  
             part.write(savePath + File.separator + fileName);
             trackPath = SAVE_DIR + File.separator + fileName;
             }  

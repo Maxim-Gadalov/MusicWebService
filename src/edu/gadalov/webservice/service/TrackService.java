@@ -33,7 +33,7 @@ public class TrackService {
 	 * @return AudioTrack
 	 */
 	public AudioTrack getTrackById(Integer id){
-		AudioTrack track = null;
+		AudioTrack track = new AudioTrack();
 		AudioTrackDAO trackDAO = new AudioTrackDAO();
 		try{
 			track = trackDAO.findById(id);

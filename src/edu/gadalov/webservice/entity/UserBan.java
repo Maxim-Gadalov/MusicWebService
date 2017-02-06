@@ -1,10 +1,13 @@
 package edu.gadalov.webservice.entity;
+
+import edu.gadalov.webservice.util.Unusable;
+
 /**Entity class for interaction with database information and business logic.
  * Ban object.
  * @author Maxim Gadalov
  *
  */
-public class BanList {
+public class UserBan implements Unusable{  
 	private int id;
 	private User user;
 	private String reason;
@@ -15,11 +18,16 @@ public class BanList {
 	 * @param reason - reason of ban (String)
 	 * @param idAdmin - id admin who banned user
 	 */
-	public BanList(int id, User user, String reason, int idAdmin) {
+	public UserBan(int id, User user, String reason, int idAdmin) {
 		this.id = id;
 		this.user = user;
 		this.reason = reason;
 		this.idAdmin = idAdmin;
+	}
+	/**
+	 * Default constructor which create empty object.
+	 */
+	public UserBan(){
 	}
 	/**
 	 * @return User @see {@link User#User(int, Role, String, String, String, Discount, String, String)} 
@@ -68,6 +76,10 @@ public class BanList {
 	 */
 	public int getId(){
 		return id;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.id == 0) & (this.idAdmin == 0) & (this.reason == null) & (this.user == null));
 	}
 
 }

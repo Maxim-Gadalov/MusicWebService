@@ -1,4 +1,7 @@
 package edu.gadalov.webservice.entity;
+
+import edu.gadalov.webservice.util.Unusable;
+
 /**
  * Entity class for interaction with database information and business logic.
  * Audio track object.
@@ -6,7 +9,7 @@ package edu.gadalov.webservice.entity;
  *
  */
 
-public class AudioTrack {
+public class AudioTrack implements Unusable{
 	private int id;
 	private User user;
 	private String singer;
@@ -38,6 +41,12 @@ public class AudioTrack {
 		this.cost = cost;
 		this.genre = genre;
 		this.visibility = visibility;
+	}
+	/**
+	 * Default constructor which create empty object.
+	 */
+	public AudioTrack(){
+		
 	}
 	/**
 	 * @return the integer Id of object
@@ -146,6 +155,12 @@ public class AudioTrack {
 	 */
 	public boolean getVisibility(){
 		return visibility;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.id == 0) & (this.user == null) & (this.cost == 0.0) & (this.album == null) &
+				(this.filePath == null) & (this.genre == null) & (this.singer == null) &
+				(this.trackName == null) & (this.visibility == false));
 	}
 
 }

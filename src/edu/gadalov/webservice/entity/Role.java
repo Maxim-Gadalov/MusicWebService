@@ -1,10 +1,13 @@
 package edu.gadalov.webservice.entity;
+
+import edu.gadalov.webservice.util.Unusable;
+
 /**Entity class for interaction with database information and business logic.
  * Role object.
  * @author Maxim Gadalov
  *
  */
-public class Role {
+public class Role implements Unusable{
 	private int id;
 	private String roleName;
 	/**Create object with following parameters
@@ -14,6 +17,11 @@ public class Role {
 	public Role(int id,String roleName){
 		this.id = id;
 		this.roleName = roleName;
+	}
+	/**
+	 * Default constructor which create empty object.
+	 */
+	public Role(){
 	}
 	/**
 	 * @return id of the object
@@ -38,5 +46,9 @@ public class Role {
 	 */
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	@Override
+	public boolean isUntapped() {
+		return ((this.id == 0) & (this.roleName == null));
 	}
 }
