@@ -3,7 +3,6 @@ package edu.gadalov.webservice.service;
 import edu.gadalov.webservice.dao.UserDAO;
 import edu.gadalov.webservice.entity.User;
 import edu.gadalov.webservice.util.EncryptionPassword;
-import edu.gadalov.webservice.validation.UserValidation;
 
 /**Log in service class.
  * @author Maxim Gadalov
@@ -20,7 +19,7 @@ public class LoginService {
 	 */
 	public String loginCheck(String login,String password){
 		String errorMessage = new String();
-		UserValidation validation = new UserValidation();
+		UserService validation = new UserService();
 		User user = new User();
 		UserDAO userDAO = new UserDAO();
 		try{

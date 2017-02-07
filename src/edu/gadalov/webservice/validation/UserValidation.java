@@ -13,7 +13,6 @@ public class UserValidation {
 	private static final String DIGITAL_REGEXP = "(.*)[0-9](.*)";
 	private static final String LOWERCASE_LETTER_REGEXP = "(.*)[a-z](.*)";
 	private static final String UPPERCASE_LETTER_REGEXP = "(.*)[A-Z](.*)";
-	private static final String EMAIL_CHECK_REGEXP = "(.*)@(.*)";
 	/**Check registration form
 	 * @param user - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, edu.gadalov.webservice.entity.Discount, String, String)}
 	 * @return true if form valid, false - otherwise
@@ -125,12 +124,5 @@ public class UserValidation {
 	public boolean passwordValidity(String password){
 		return ((password.length() >= 8) && (password.length() <=30) && password.matches(DIGITAL_REGEXP) &&
 				password.matches(LOWERCASE_LETTER_REGEXP) && password.matches(UPPERCASE_LETTER_REGEXP));
-	}
-	/**Defines if login - email
-	 * @param login - String login
-	 * @return true if login matches email content, false - nickname
-	 */
-	public boolean isEmail(String login){ // вынести в отдельный класс
-		return (login.matches(EMAIL_CHECK_REGEXP));
 	}
 }

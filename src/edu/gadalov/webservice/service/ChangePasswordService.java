@@ -37,13 +37,11 @@ public class ChangePasswordService {
 	 */
 	public boolean changePassword(User user,String password){
 		UserDAO userDAO = new UserDAO();
-		boolean result = false;
 		user.setPassword(EncryptionPassword.encrypt(password));
 		try{
-			result = userDAO.updateUserPassword(user);
+			return userDAO.updateUserPassword(user);
 		} finally{
 			userDAO.close(userDAO.getConnection());
 		}
-		return result;
 	}
 }

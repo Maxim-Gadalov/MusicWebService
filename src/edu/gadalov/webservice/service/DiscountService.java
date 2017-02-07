@@ -14,14 +14,12 @@ public class DiscountService {
 	 * @return Discount @see {@link Discount#Discount(int, int)}
 	 */
 	public Discount getDiscount(int id){
-		Discount discount = new Discount();
 		DiscountDAO dao = new DiscountDAO(ConnectionPool.getInstance().getConnectionFromPool());
 		try{
-			discount = dao.findById(id);
+			return dao.findById(id);
 		} finally{
 			dao.close(dao.getConnection());
 		}
-		return discount;
 	}
 
 }

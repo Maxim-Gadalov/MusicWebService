@@ -38,17 +38,16 @@ public class RegistrationService {
 	 * @return true if insert was successful , false - otherwise
 	 */
 	public boolean addUser(User user){
-		boolean result = false;
 		UserDAO userDAO = new UserDAO();
 		UserValidation validation = new UserValidation();
 		try{
 			if(validation.registrationFormValidity(user)){
-				result = userDAO.create(user);
+				return userDAO.create(user);
 				}
 			}
 		finally{
 			userDAO.close(userDAO.getConnection());
 			}
-		return result;
+		return false;
 	}
 }

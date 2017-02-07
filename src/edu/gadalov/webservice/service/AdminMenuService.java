@@ -2,7 +2,6 @@ package edu.gadalov.webservice.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -29,26 +28,22 @@ public class AdminMenuService {
 	 */
 	public List<User> getAllUsers(){
 		UserDAO userDAO = new UserDAO();
-		List<User> list = new ArrayList<>();
 		try{
-			list = userDAO.findAll();
+			return userDAO.findAll();
 		} finally{
 			userDAO.close(userDAO.getConnection());
 		}
-		return list;
 	}
 	/**Return AudioTracks
 	 * @return list of AduioTrack objects
 	 */
 	public List<AudioTrack> getAllTracks(){
 		AudioTrackDAO trackDAO = new AudioTrackDAO();
-		List<AudioTrack> list = new ArrayList<>();
 		try{
-			list = trackDAO.findAll();
+			return trackDAO.findAll();
 		} finally{
 			trackDAO.close(trackDAO.getConnection());
 		}
-		return list;
 	}
 	/**Upload music file to the server
 	 * @param request - HttpServletRequest
@@ -80,26 +75,21 @@ public class AdminMenuService {
 	 */
 	public boolean createTrack(AudioTrack track){
 		AudioTrackDAO trackDAO = new AudioTrackDAO();
-		boolean result = false;
 		try{
-			result = trackDAO.create(track);
+			return trackDAO.create(track);
 		} finally{
 			trackDAO.close(trackDAO.getConnection());
 		}
-		return result;
-		
 	}
 	/**Return list of Discounts
 	 * @return list of Discount objects
 	 */
 	public List<Discount> getDiscounts(){
-		List<Discount> list = new ArrayList<>();
 		DiscountDAO discountDAO = new DiscountDAO(ConnectionPool.getInstance().getConnectionFromPool());
 		try{
-			list = discountDAO.findAll();
+			return discountDAO.findAll();
 		} finally{
 			discountDAO.close(discountDAO.getConnection());
 		}
-		return list;
 	}
 }

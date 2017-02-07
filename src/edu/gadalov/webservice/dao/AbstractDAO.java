@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.gadalov.webservice.connection.ConnectionPool;
+import edu.gadalov.webservice.exception.DatabaseRequestException;
 
 /**Abstract DAO class
  * @author Maxim Gadalov
@@ -69,7 +70,8 @@ public abstract class AbstractDAO<K,T> {
 		try{
 			methodBody.run(st);
 		} catch(SQLException e){
-			LOG.error(e);
+			LOG.fatal(e);
+			throw new DatabaseRequestException("Database connection was interrupted");
 		} finally{
 			statementClose(st);
 		}

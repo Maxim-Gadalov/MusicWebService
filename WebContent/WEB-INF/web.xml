@@ -8,9 +8,10 @@
 		<session-timeout>20</session-timeout>
   </session-config> 
   <error-page>
-     <exception-type>java.lang.RuntimeException</exception-type>
+     <exception-type>edu.gadalov.webservice.exception.DatabaseRequestException</exception-type>
      <location>/errors/database_error.jsp</location>
 </error-page>
+
   <jsp-config>
     <taglib>
        <taglib-uri>customtags</taglib-uri>

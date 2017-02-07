@@ -1,6 +1,5 @@
 package edu.gadalov.webservice.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.gadalov.webservice.dao.CommentDAO;
@@ -18,14 +17,12 @@ public class CommentService {
 	 * @return list of Comment objects
 	 */
 	public List<Comment> getTrackComments(AudioTrack track){
-		List<Comment> list = new ArrayList<>();
 		CommentDAO dao = new CommentDAO();
 		try{
-			list = dao.findByTrack(track);
+			return dao.findByTrack(track);
 		} finally{
 			dao.close(dao.getConnection());
 		}
-		return list;
 	}
 	/**Insert new comment into database
 	 * @param user - User @see {@link User#User(int, edu.gadalov.webservice.entity.Role, String, String, String, edu.gadalov.webservice.entity.Discount, String, String)}
@@ -34,14 +31,12 @@ public class CommentService {
 	 * @return true if insert was successful , false - otherwise
 	 */
 	public boolean addComment(User user, AudioTrack track, String text){
-		boolean result = false;
 		CommentDAO dao = new CommentDAO();
 		try{
-			result = dao.create(new Comment(1,user,track,text,null));
+			return dao.create(new Comment(1,user,track,text,null));
 		} finally{
 			dao.close(dao.getConnection());
 		}
-		return result;
 	}
 	/**Return Comment found by id
 	 * @param id - integer id
@@ -49,13 +44,11 @@ public class CommentService {
 	 */
 	public Comment getComment(Integer id){
 		CommentDAO dao = new CommentDAO();
-		Comment comment = new Comment();
 		try{
-			comment = dao.findById(id);
+			return dao.findById(id);
 		} finally{
 			dao.close(dao.getConnection());
 		}
-		return comment;
 	}
 	/**Update user comment
 	 * @param id - integer id
@@ -64,18 +57,17 @@ public class CommentService {
 	 * @return true if update was successful, false - otherwise
 	 */
 	public boolean editComment(Integer id,String newText, User admin){
-		boolean result = false;
 		Comment comment = getComment(id);
 		if(!comment.isUntapped()){
 			comment.setText(newText+"(edit by "+admin.getNickname()+")");
 			CommentDAO dao = new CommentDAO();
 			try{
-			result = dao.updateComment(comment);
+			return dao.updateComment(comment);
 			} finally{
 				dao.close(dao.getConnection());
 			}
 		}
-		return result;
+		return false;
 	}
 
 }

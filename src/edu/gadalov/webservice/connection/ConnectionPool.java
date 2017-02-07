@@ -12,6 +12,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.logging.log4j.Logger;
+
+import edu.gadalov.webservice.exception.DatabaseRequestException;
+
 import org.apache.logging.log4j.LogManager;
 
 /**Custom thread safety connection pool.
@@ -37,7 +40,7 @@ public class ConnectionPool {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 		} catch (SQLException e) {
 			LOG.fatal("Can not register JDBC driver "+e);
-			throw new RuntimeException("Can not register JDBC driver");
+			throw new DatabaseRequestException("Can not register JDBC driver");
 		}
 		initResource();
 	}
@@ -130,7 +133,7 @@ public class ConnectionPool {
 		dbPassword = resource.getString("db.password");
 		} catch(MissingResourceException e){
 			LOG.fatal(e);
-			throw new RuntimeException("Database resource not found");
+			throw new DatabaseRequestException("Database resource not found");
 		}
 	}
 	/**
@@ -138,7 +141,7 @@ public class ConnectionPool {
 	 */
 	private void checkConnection(){
 		if(connectionPool.isEmpty()){
-			throw new RuntimeException("Server can not connected to the database..."); 
+			throw new DatabaseRequestException("Server can not connected to the database...");
 		}
 	}
 }

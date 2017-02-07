@@ -40,14 +40,10 @@ public class EditProfileService {
 	 */
 	public boolean editUserProfile(User user){
 		UserDAO userDAO = new UserDAO();
-		boolean result = false;
 		try{
-			result = userDAO.updateUser(user);
+			return userDAO.updateUser(user);
 		}finally{
 			userDAO.close(userDAO.getConnection());
 		}
-		return result;
-		
 	}
-
 }
